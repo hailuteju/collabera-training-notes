@@ -13649,7 +13649,7 @@ sed -n 1,50p messages &gt; myfile        (1=&gt;starting line, 50=&gt;ending lin
 
 sed -i 's/Hypervisor/hailu/g' myfile     (in-place replace)
 
-echo "Welcome To The Geek Stuff" | sed 's/\(\b[A-Z]\)/\(1\)/g'       
+echo "Welcome To The Geek Stuff" | sed 's/\(\b[A-Z]\)/\(\1\)/g'       
 
                                                         (prints the first character of every word in parenthesis)
 
@@ -13825,6 +13825,7 @@ git branch -m &lt;old-branch-name&gt; &lt;new-branch-name&gt;        (modify old
 
 git rm &lt;file-name&gt;                  (removes a file from a git repo)
 
+git checkout -- &lt;file-name&gt;         (to discard changes in the working directory)
 
 -----
 
