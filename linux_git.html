@@ -12605,6 +12605,159 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="07/01/2019">07/01/2019<a class="anchor-link" href="#07/01/2019">&#182;</a></h1><h3 id="Snowflake">Snowflake<a class="anchor-link" href="#Snowflake">&#182;</a></h3><p><strong>Create Snowflake objects</strong></p>
+<p><code>create or replace database sf_tuts;</code></p>
+<p><strong>Check the schema</strong></p>
+<p><code>select current_database(), current_schema();</code></p>
+<p><strong>Create table</strong></p>
+<div class="highlight"><pre><span></span><span class="c1">-- - create table</span>
+
+<span class="k">drop</span> <span class="k">table</span> <span class="n">emp_basic</span><span class="p">;</span>
+
+
+<span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="k">table</span> <span class="n">emp_basic</span> <span class="p">(</span>
+  <span class="n">first_name</span> <span class="n">string</span> <span class="p">,</span>
+  <span class="n">last_name</span> <span class="n">string</span> <span class="p">,</span>
+  <span class="n">email</span> <span class="n">string</span> <span class="p">,</span>
+  <span class="n">streetaddress</span> <span class="n">string</span> <span class="p">,</span>
+  <span class="n">city</span> <span class="n">string</span> <span class="p">,</span>
+  <span class="n">start_date</span> <span class="nb">date</span>
+  <span class="p">);</span>
+</pre></div>
+<p><strong>File format</strong></p>
+<div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">file</span> <span class="n">format</span> <span class="n">my_csv_format</span>
+  <span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_delimiter</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span> <span class="n">skip_header</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">null_if</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;NULL&#39;</span><span class="p">,</span> <span class="s1">&#39;null&#39;</span><span class="p">)</span> <span class="n">empty_field_as_null</span> <span class="o">=</span> <span class="k">true</span> <span class="n">compression</span> <span class="o">=</span> <span class="n">gzip</span><span class="p">;</span>
+</pre></div>
+<p><strong>Stage data files</strong></p>
+<ol>
+<li>Using data from s3</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">stage</span> <span class="n">my_s3_stage</span> <span class="n">url</span><span class="o">=</span><span class="s1">&#39;s3://becloudready/data-analytics&#39;</span>
+  <span class="n">credentials</span><span class="o">=</span><span class="p">(</span><span class="n">aws_key_id</span><span class="o">=</span><span class="s1">&#39;&lt;your key&gt;&#39;</span> <span class="n">aws_secret_key</span><span class="o">=</span><span class="s1">&#39;&lt;your secred&gt;&#39;</span><span class="p">)</span>
+  <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">);</span>
+
+
+
+<span class="k">copy</span> <span class="k">into</span> <span class="n">EMP_BASIC</span>
+  <span class="k">from</span> <span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">becloudready</span><span class="o">/</span><span class="k">data</span><span class="o">-</span><span class="n">analytics</span> <span class="n">credentials</span><span class="o">=</span><span class="p">(</span><span class="n">aws_key_id</span><span class="o">=</span><span class="s1">&#39;&lt;your key&gt;&#39;</span> <span class="n">aws_secret_key</span><span class="o">=</span><span class="s1">&#39;&lt;your secred&gt;&#39;</span><span class="p">)</span>
+  <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+  <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;.*employees0[1-5].csv&#39;</span>
+  <span class="n">on_error</span> <span class="o">=</span> <span class="s1">&#39;skip_file&#39;</span><span class="p">;</span>
+
+
+
+<span class="k">copy</span> <span class="k">into</span> <span class="n">EMP_BASIC</span>
+  <span class="k">from</span> <span class="o">@</span><span class="n">my_s3_stage</span>
+  <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+  <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;.*employees0[1-5].csv&#39;</span>
+  <span class="n">on_error</span> <span class="o">=</span> <span class="s1">&#39;skip_file&#39;</span><span class="p">;</span>
+</pre></div>
+<ol>
+<li>Using data on local machine</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="n">put</span> <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">Users</span><span class="o">/</span><span class="n">hailuteju</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">awsTraining</span><span class="o">/</span><span class="n">notes</span><span class="o">/</span><span class="n">snowflake</span><span class="o">-</span><span class="n">tutorials</span><span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">employees0</span><span class="o">*</span><span class="p">.</span><span class="n">csv</span> <span class="o">@</span><span class="n">sf_tuts</span><span class="p">.</span><span class="k">public</span><span class="o">%</span><span class="n">emp_basic</span><span class="p">;</span>
+</pre></div>
+<p><strong>List staged files</strong></p>
+<p><code>list @sf_tuts.public.%emp_basic;</code></p>
+<p><strong>Copy data to target tables</strong></p>
+<div class="highlight"><pre><span></span><span class="k">copy</span> <span class="k">into</span> <span class="n">emp_basic</span>
+  <span class="k">from</span> <span class="o">@%</span><span class="n">emp_basic</span>
+  <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+  <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;.*employees0[1-5].csv.gz&#39;</span>
+  <span class="n">on_error</span> <span class="o">=</span> <span class="s1">&#39;skip_file&#39;</span><span class="p">;</span>
+</pre></div>
+<p><strong>Create virtual warehouse</strong></p>
+<div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">warehouse</span> <span class="n">sf_tuts_wh</span> <span class="k">with</span>
+    <span class="n">warehouse_size</span> <span class="o">=</span> <span class="s1">&#39;X-SMALL&#39;</span>
+    <span class="n">auto_suspend</span> <span class="o">=</span> <span class="mi">180</span>
+    <span class="n">auto_resume</span> <span class="o">=</span> <span class="k">true</span>
+    <span class="n">initially_suspended</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Exercise_Part_1.csv&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 41188 entries, 0 to 41187
+Data columns (total 15 columns):
+ID             41188 non-null object
+age            41188 non-null int64
+job            41188 non-null object
+marital        41188 non-null object
+education      41188 non-null object
+default        41188 non-null object
+housing        41188 non-null object
+loan           41188 non-null object
+contact        41188 non-null object
+month          41188 non-null object
+day_of_week    41188 non-null object
+duration       41188 non-null int64
+campaign       41188 non-null int64
+pdays          41188 non-null int64
+previous       41188 non-null int64
+dtypes: int64(5), object(10)
+memory usage: 4.7+ MB
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
     </div>
   </div>
 </body>
