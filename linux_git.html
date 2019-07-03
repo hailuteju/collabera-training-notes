@@ -12554,14 +12554,14 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="06/27/2019">06/27/2019<a class="anchor-link" href="#06/27/2019">&#182;</a></h1><p><code>Firewall</code> - protective network.</p>
-<p>In amazon aws, firewall is called <code>security group</code>.</p>
+<h1 id="06/27/2019">06/27/2019<a class="anchor-link" href="#06/27/2019">&#182;</a></h1><p><strong><code>Firewall</code></strong> - protective network.</p>
+<p>In amazon aws, firewall is called <strong><code>security group</code>.</strong></p>
 <p>Security group:  Inbound = 0.0.0.0/0   (=&gt; everywhere). It can be editted.</p>
 <p><code>df -h</code>  : block devices on your machine</p>
 <p><code>volume</code>    =&gt; vertual hard disk</p>
-<p><code>filesystem</code></p>
+<p><strong><code>filesystem</code></strong></p>
 <p>=&gt; In computing, a file system or filesystem (often abbreviated to fs), controls how data is stored and retrieved. Without a file system, information placed in a storage medium would be one large body of data with no way to tell where one piece of information stops and the next begins.</p>
-<p><code>mount</code></p>
+<p><strong><code>mount</code></strong></p>
 <p>When used without any argument, the <code>mount</code> command will display all currently attached file systems:</p>
 <p>All files accessible in Unix, or a Unix-style system such as Linux, are arranged in one big tree: the file hierarchy, rooted at /. These files can be spread out over several devices. The <code>mount</code> command attaches a filesystem, located on some device or other, to the file tree. Conversely, the <code>umount</code> command will detach it again.</p>
 <p>The standard form of the mount command is:</p>
@@ -12572,34 +12572,36 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
 <p>then <code>mount</code> looks for a corresponding mountpoint (and then, if not found, for a corresponding device) entry in the <code>/etc/fstab</code> file, and attempts to mount it.</p>
 <p><code>umount</code></p>
 <p>The <code>umount</code> command detaches the specified file system(s) from the file hierarchy. A file system is specified by giving the directory where it has been mounted. Giving the special device on which the file system lives may also work, but is an obsolete method, mainly because it will fail in case this device was mounted on more than one directory.</p>
-<p><a href="https://linuxize.com/post/how-to-mount-and-unmount-file-systems-in-linux/">Mor on mount</a></p>
-<p><strong>RAID</strong> is a Redundant Array of Inexpensive disks, but nowadays it is called Redundant Array of Independent drives. Earlier it is used to be very costly to buy even a smaller size of disk, but nowadays we can buy a large size of disk with the same amount like before. Raid is just a collection of disks in a pool to become a logical volume.</p>
-<p><strong>ACID</strong> (Atomicity, Consistency, Isolation, Durability) is a set of properties of database transactions intended to guarantee validity even in the event of errors, power failures, etc. In the context of databases, a sequence of database operations that satisfies the ACID properties (and these can be perceived as a single logical operation on the data) is called a transaction. For example, a transfer of funds from one bank account to another, even involving multiple changes such as debiting one account and crediting another, is a single transaction.</p>
+<p><a href="https://linuxize.com/post/how-to-mount-and-unmount-file-systems-in-linux/">More on mount</a></p>
+<p><strong>RAID</strong> is a Redundant Array of Inexpensive disks, but nowadays it is called <span style='background-color:lightyellow'>Redundant Array of Independent Drives</span>. Earlier it is used to be very costly to buy even a smaller size of disk, but nowadays we can buy a large size of disk with the same amount like before. Raid is just a collection of disks in a pool to become a logical volume.</p>
+<p><strong>ACID</strong> (<span style='background-color:lightyellow'>Atomicity, Consistency, Isolation, Durability</span>) is a set of properties of database transactions intended to guarantee validity even in the event of errors, power failures, etc. In the context of databases, a sequence of database operations that satisfies the ACID properties (and these can be perceived as a single logical operation on the data) is called a transaction. For example, a transfer of funds from one bank account to another, even involving multiple changes such as debiting one account and crediting another, is a single transaction.</p>
 <p>In 1983, Andreas Reuter and Theo Härder coined the acronym ACID as shorthand for Atomicity, Consistency, Isolation, and Durability, building on earlier work by Jim Gray who enumerated Atomicity, Consistency, and Durability but left out Isolation when characterizing the transaction concept. These four properties describe the major guarantees of the transaction paradigm, which has influenced many aspects of development in database systems.</p>
 <p><a href="https://en.wikipedia.org/wiki/ACID">More on ACID</a></p>
 <p><code>ETL</code>   =&gt; Extract Transform Load</p>
 <p><strong>Data warehousing</strong></p>
 <p>Data warehousing is the process of constructing and using a data warehouse. A data warehouse is constructed by integrating data from multiple heterogeneous sources that support analytical reporting, structured and/or ad hoc queries, and decision making. Data warehousing involves data cleaning, data integration, and data consolidations.</p>
-<p><code>sudo yum install mysql -y</code>    (to install mysql on a linux ec2 instance)</p>
+<p><strong><code>sudo yum install mysql -y</code></strong>    (to install mysql on a linux ec2 instance)</p>
 <p>After creating a MariaDB RDS,</p>
-<p><code>mysql -h&lt;RDS-endpoint&gt; -u&lt;RDS-username&gt; -p&lt;RDS-password&gt;</code>              (to longIn to the RDS instance)</p>
-<p><code>mysql -h&lt;RDS-endpoint&gt; -u&lt;RDS-username&gt; -p&lt;RDS-password&gt; &lt; mysqlsampledatabase.sql</code>   (to import 3rd party sql data to the RDS)</p>
-<p><code>show databases;</code>        (to see all the available databases)</p>
-<p><code>use &lt;db-name&gt;;</code>         (to start using the database db-name)</p>
-<p><code>show tables;</code>           (to see the list of tables in the database being used)</p>
-<p><code>desc &lt;table-name&gt;;</code>     (to see the description of a table)</p>
-<p><strong>To download data from an s3 bucket to an ec2 instance:</strong></p>
+<p><strong><code>mysql -h&lt;RDS-endpoint&gt; -u&lt;RDS-username&gt; -p&lt;RDS-password&gt;</code></strong>              (to longIn to the RDS instance from an ec2 cli)</p>
+<p><strong><code>mysql -h&lt;RDS-endpoint&gt; -u&lt;RDS-username&gt; -p&lt;RDS-password&gt; &lt; mysqlsampledatabase.sql</code></strong>   (to import 3rd party sql data into the RDS)</p>
+<p><strong><code>show databases;</code></strong>        (to see all the available databases)</p>
+<p><strong><code>use &lt;db-name&gt;;</code></strong>         (to start using the database db-name)</p>
+<p><strong><code>show tables;</code></strong>           (to see the list of tables in the database being used)</p>
+<p><strong><code>desc &lt;table-name&gt;;</code></strong>     (to see the description of a table)</p>
+<h5 id="To-download-data-from-an-s3-bucket-to-an-ec2-instance:">To download data from an s3 bucket to an ec2 instance:<a class="anchor-link" href="#To-download-data-from-an-s3-bucket-to-an-ec2-instance:">&#182;</a></h5><ul>
+<li><span style='color:purple'>Use postman</span>    </li>
+</ul>
 <ul>
-<li><p>Use postman</p>
-</li>
-<li><p>Choose a REST method (GET, POST, PUT, ...) and enter the URL for the s3 bucket</p>
-</li>
-<li><p>Under Authorization, enter the user AccessKey and SecreteKey</p>
-</li>
-<li><p>Then, generate a cURL code and copy it</p>
-</li>
-<li><p>Finally, on a CLI in an ec2 instance, enter <code>&lt;cURL-code&gt; -o newFileName</code></p>
-</li>
+<li><span style='color:purple'>Choose a GET method from the RESTful methods (GET, POST, PUT, PATCH, ...) and enter the URL for the s3 bucket</span>   </li>
+</ul>
+<ul>
+<li><span style='color:purple'>Under Authorization, enter the user AccessKey and SecreteKey</span>     </li>
+</ul>
+<ul>
+<li><span style='color:purple'>Then, generate a cURL code and copy it</span>  </li>
+</ul>
+<ul>
+<li><span style='color:purple'>Finally, on a CLI in an ec2 instance, enter **`<cURL-code> -o newFileName`**</span> </li>
 </ul>
 
 </div>
@@ -12630,15 +12632,21 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
 </pre></div>
 <p><strong>File format</strong></p>
 <div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">file</span> <span class="n">format</span> <span class="n">my_csv_format</span>
-  <span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_delimiter</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span> <span class="n">skip_header</span> <span class="o">=</span> <span class="mi">1</span> <span class="n">null_if</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;NULL&#39;</span><span class="p">,</span> <span class="s1">&#39;null&#39;</span><span class="p">)</span> <span class="n">empty_field_as_null</span> <span class="o">=</span> <span class="k">true</span> <span class="n">compression</span> <span class="o">=</span> <span class="n">gzip</span><span class="p">;</span>
+  <span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> 
+  <span class="n">field_delimiter</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span> 
+  <span class="n">skip_header</span> <span class="o">=</span> <span class="mi">1</span> 
+  <span class="n">null_if</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;NULL&#39;</span><span class="p">,</span> <span class="s1">&#39;null&#39;</span><span class="p">)</span> 
+  <span class="n">empty_field_as_null</span> <span class="o">=</span> <span class="k">true</span> 
+  <span class="n">compression</span> <span class="o">=</span> <span class="n">gzip</span><span class="p">;</span>
 </pre></div>
 <p><strong>Stage data files</strong></p>
 <ol>
 <li>Using data from s3</li>
 </ol>
-<div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">stage</span> <span class="n">my_s3_stage</span> <span class="n">url</span><span class="o">=</span><span class="s1">&#39;s3://becloudready/data-analytics&#39;</span>
-  <span class="n">credentials</span><span class="o">=</span><span class="p">(</span><span class="n">aws_key_id</span><span class="o">=</span><span class="s1">&#39;&lt;your key&gt;&#39;</span> <span class="n">aws_secret_key</span><span class="o">=</span><span class="s1">&#39;&lt;your secred&gt;&#39;</span><span class="p">)</span>
-  <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">stage</span> <span class="n">my_s3_stage</span> 
+    <span class="n">url</span><span class="o">=</span><span class="s1">&#39;s3://&lt;bucket&gt;&#39;</span>
+    <span class="n">credentials</span><span class="o">=</span><span class="p">(</span><span class="n">aws_key_id</span><span class="o">=</span><span class="s1">&#39;&lt;your key&gt;&#39;</span> <span class="n">aws_secret_key</span><span class="o">=</span><span class="s1">&#39;&lt;your secred&gt;&#39;</span><span class="p">)</span>
+    <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">);</span>
 
 
 
@@ -12670,12 +12678,34 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
   <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;.*employees0[1-5].csv.gz&#39;</span>
   <span class="n">on_error</span> <span class="o">=</span> <span class="s1">&#39;skip_file&#39;</span><span class="p">;</span>
 </pre></div>
+<p><strong>Copy data frm snowflake to s3</strong></p>
+<div class="highlight"><pre><span></span><span class="k">COPY</span> <span class="k">INTO</span> <span class="s1">&#39;s3://&lt;bucket&gt;/testfile.csv.gz&#39;</span>
+<span class="k">FROM</span> <span class="n">TABLE_IN_SNOWFLAKE</span>
+<span class="n">FILE_FORMAT</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+<span class="n">CREDENTIALS</span> <span class="o">=</span> <span class="p">(</span><span class="n">AWS_KEY_ID</span> <span class="o">=</span> <span class="s1">&#39;********&#39;</span> <span class="n">AWS_SECRET_KEY</span> <span class="o">=</span> <span class="s1">&#39;*********&#39;</span><span class="p">)</span>
+<span class="c1">--ENCRYPTION = (type = &lt;&gt;  kms_key_id = &lt;&gt;)</span>
+<span class="n">OVERWRITE</span> <span class="o">=</span> <span class="k">TRUE</span>
+<span class="n">SINGLE</span> <span class="o">=</span> <span class="k">TRUE</span><span class="p">;</span>
+</pre></div>
+<p><strong>Storage integration in s3</strong></p>
+<div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">storage</span> <span class="n">integration</span> <span class="n">s3_int</span>
+<span class="k">type</span><span class="o">=</span><span class="n">external_storage</span>
+<span class="n">storage_provider</span><span class="o">=</span><span class="n">s3</span>
+<span class="n">enabled</span><span class="o">=</span><span class="k">true</span>
+<span class="n">storage_aws_role_arn</span><span class="o">=</span><span class="s1">&#39;arn:aws:iam::**********:role/myrole&#39;</span>
+<span class="n">storage_allowed_locations</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;s3://&lt;mybucket1&gt;/mypath1/&#39;</span><span class="p">,</span> <span class="s1">&#39;s3://&lt;mybucket2&gt;/mypath2/&#39;</span><span class="p">)</span>
+<span class="n">storage_blocked_locations</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;s3://&lt;mybucket1&gt;/mypath1/sensitivedata/&#39;</span><span class="p">,</span> <span class="s1">&#39;s3://&lt;mybucket2&gt;/mypath2/sesitivedata/&#39;</span><span class="p">)</span>
+</pre></div>
 <p><strong>Create virtual warehouse</strong></p>
 <div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">warehouse</span> <span class="n">sf_tuts_wh</span> <span class="k">with</span>
     <span class="n">warehouse_size</span> <span class="o">=</span> <span class="s1">&#39;X-SMALL&#39;</span>
     <span class="n">auto_suspend</span> <span class="o">=</span> <span class="mi">180</span>
     <span class="n">auto_resume</span> <span class="o">=</span> <span class="k">true</span>
     <span class="n">initially_suspended</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</pre></div>
+<p><strong>Querying data from snowflake using the CLI on a local machine</strong></p>
+<div class="highlight"><pre><span></span><span class="n">snowsql</span> <span class="o">-</span><span class="k">c</span> <span class="n">example</span> <span class="o">-</span><span class="n">d</span> <span class="n">my_db</span> <span class="o">-</span><span class="n">w</span> <span class="n">my_wh</span> <span class="o">-</span><span class="n">q</span> <span class="ss">&quot;select * from mytable&quot;</span> <span class="o">-</span><span class="n">o</span> <span class="n">output_format</span><span class="o">=</span><span class="n">csv</span> <span class="o">-</span><span class="n">o</span> <span class="n">header</span><span class="o">=</span><span class="k">false</span> <span class="o">-</span><span class="n">o</span> <span class="n">timing</span><span class="o">=</span><span class="k">false</span> 
+<span class="o">-</span><span class="n">o</span> <span class="n">friendly</span><span class="o">=</span><span class="k">false</span> <span class="o">&gt;</span> <span class="n">output_file</span><span class="p">.</span><span class="n">csv</span>
 </pre></div>
 
 </div>
@@ -12840,6 +12870,37 @@ memory usage: 4.7+ MB
 
 
 <span class="c1">-- snowsql -c example -f snowflake_assignment.sql -o output_format=csv -o header=false -o timing=false -o friendly=false  &gt; sf_assignment_output_file.csv</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Databricks">Databricks<a class="anchor-link" href="#Databricks">&#182;</a></h3><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+
+
+
+<span class="c1"># from a local file</span>
+<span class="n">sparkDF</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/myFilePath/testFile.csv&quot;</span><span class="p">)</span>
+
+<span class="n">sparkDF</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># from s3 bucket</span>
+
+
+<span class="n">ACCESS_KEY</span> <span class="o">=</span> <span class="s2">&quot;myaccesskey&quot;</span>
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s2">&quot;mysecretkey&quot;</span>
+<span class="n">ENCODED_SECRET_KEY</span> <span class="o">=</span> <span class="n">SECRET_KEY</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%2F</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">BUCKET_NAME</span> <span class="o">=</span> <span class="s2">&quot;mybucketname&quot;</span>
+
+
+<span class="n">sparkDB</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;s3a://{}:{}@{}/mys3FilePath/testFile.csv&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ACCESS_KEY</span><span class="p">,</span> <span class="n">ENCODED_SECRETE_KEY</span><span class="p">,</span><span class="n">BUCKET_NAME</span><span class="p">))</span>
+
+<span class="n">sparkDB</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
 </div>
