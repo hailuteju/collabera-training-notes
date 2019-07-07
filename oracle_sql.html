@@ -11795,67 +11795,71 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="cm">/* June 17, 2019 */</span>
 
+<span class="c1">-- Join the contacts table and the customers table </span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span> <span class="k">c</span>
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="n">u</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">u</span><span class="p">.</span><span class="n">customer_id</span><span class="p">;</span>
 
-<span class="c1">---</span>
+
+<span class="c1">-- List all records of the employees table where the manager id is not null</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span>
 <span class="k">WHERE</span> <span class="n">manager_id</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">;</span>
 
-<span class="c1">---</span>
+
+<span class="c1">-- List all records of the orders table where order date is between the two given dates</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span>
 <span class="k">WHERE</span> <span class="n">order_date</span> <span class="k">BETWEEN</span> <span class="s1">&#39;01-JAN-17&#39;</span> <span class="k">AND</span> <span class="s1">&#39;28-FEB-17&#39;</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- List all records of the orders table where the order id is between 1 and 10 (inclusive)</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span>
 <span class="k">WHERE</span> <span class="n">order_id</span> <span class="k">BETWEEN</span> <span class="mi">1</span> <span class="k">AND</span> <span class="mi">10</span><span class="p">;</span>
 
-<span class="c1">---</span>
+
+<span class="c1">-- List the first 10 rows of the orders table ordered by order id (ascending)</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">order_id</span>
 <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="mi">10</span> <span class="k">ROWS</span> <span class="k">ONLY</span><span class="p">;</span>
 <span class="c1">--or FETCH NEXT 10 ROWS ONLY;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- List all records of the contacts table where the first name contains the string &#39;John&#39;</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span>
 <span class="k">WHERE</span> <span class="n">first_name</span> <span class="k">LIKE</span> <span class="s1">&#39;%John%&#39;</span><span class="p">;</span>
 
-<span class="c1">---</span>
+<span class="c1">-- List all records of the contacts table where the last name contains the string &#39;John&#39;</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span>
 <span class="k">WHERE</span> <span class="n">last_name</span> <span class="k">LIKE</span> <span class="s1">&#39;%John%&#39;</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- List all records of the contacts table where the first name starts with the string &#39;John&#39;</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span>
 <span class="k">WHERE</span> <span class="n">first_name</span> <span class="k">LIKE</span> <span class="s1">&#39;John%&#39;</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- REGEXP_LIKE()</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span>
 <span class="k">WHERE</span> <span class="n">REGEXP_LIKE</span> <span class="p">(</span> <span class="n">first_name</span><span class="p">,</span> <span class="s1">&#39;John(*)&#39;</span> <span class="p">);</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Which customer(s) made orders most frequently?</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
-<span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> 
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>         <span class="cm">/* leaving out one will result in error */</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">DESC</span>
 <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">WITH</span> <span class="n">TIES</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Answers the same question as above</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
-<span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> 
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">DESC</span>
 <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">WITH</span> <span class="n">TIES</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Which customer(s) made the most number (quantity) of orders?</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">credit_limit</span><span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
@@ -11865,7 +11869,7 @@ div#notebook {
 <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">WITH</span> <span class="n">TIES</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Simple case statement</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span><span class="p">,</span> 
     <span class="k">CASE</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span>
         <span class="k">WHEN</span> <span class="s1">&#39;Argentina&#39;</span> <span class="k">THEN</span> <span class="s1">&#39;South America&#39;</span>
@@ -11874,13 +11878,13 @@ div#notebook {
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">countries</span> <span class="k">c</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Left join customers and orders. Customers that did not make orders will have null values in the order_id field</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">o</span><span class="p">.</span><span class="n">order_id</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
-<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span><span class="p">;</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Find customers that never made orders</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span>
     <span class="k">SUM</span><span class="p">(</span>
         <span class="k">CASE</span>
@@ -11889,12 +11893,12 @@ div#notebook {
         <span class="k">END</span>
      <span class="p">)</span> <span class="n">ordernum</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
-<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+<span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span>
-<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">ordernum</span> <span class="k">DESC</span><span class="p">;</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">ordernum</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Uncorrelated subqueries; answers the same question as above</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
 <span class="k">WHERE</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="k">IN</span> 
@@ -11907,50 +11911,50 @@ div#notebook {
 <span class="p">);</span>
 
 
-
 <span class="c1">-- Uncorrelated subqueries: customers with more than 5 orders</span>
-
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
 <span class="k">WHERE</span>
 <span class="p">(</span>
     <span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
     <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> 
-    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
+    <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
     <span class="k">AND</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span><span class="s1">&#39;Pending&#39;</span>
     <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
 <span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Orders (per customer) that are more than five</span>
 <span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> 
-<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="k">AND</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span><span class="s1">&#39;Pending&#39;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="k">AND</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span><span class="s1">&#39;Pending&#39;</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
 <span class="k">HAVING</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">;</span> 
 
 
-
+<span class="c1">-- Common table expression (CTE); customers that never made orders</span>
 <span class="k">WITH</span> <span class="n">temp</span> <span class="k">AS</span> 
 <span class="p">(</span>
     <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> 
     <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span> 
-    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span>
+    <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
     <span class="k">WHERE</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="k">IS</span> <span class="k">NULL</span>
 <span class="p">)</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span> 
-<span class="k">JOIN</span> <span class="n">temp</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="n">temp</span><span class="p">.</span><span class="n">customer_id</span><span class="p">;</span>
-
+<span class="k">JOIN</span> <span class="n">temp</span> <span class="k">ON</span> <span class="n">temp</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span><span class="p">;</span>
 
 
 <span class="cm">/* </span>
-<span class="cm">aggregate functions - null values are excluded </span>
+<span class="cm">Aggregate functions - null values are excluded </span>
 
 <span class="cm">Rollup creates subtotals at each level in hierarchical struture </span>
 <span class="cm">*/</span>
-
-<span class="k">SELECT</span>  <span class="n">r</span><span class="p">.</span><span class="n">region_name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span><span class="p">,</span> <span class="n">w</span><span class="p">.</span><span class="n">warehouse_name</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span> 
+<span class="k">SELECT</span>  
+    <span class="n">r</span><span class="p">.</span><span class="n">region_name</span>
+    <span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span>
+    <span class="p">,</span> <span class="n">w</span><span class="p">.</span><span class="n">warehouse_name</span>
+    <span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">warehouses</span> <span class="n">w</span> 
 <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">locations</span> <span class="n">l</span> <span class="k">ON</span> <span class="n">w</span><span class="p">.</span><span class="n">location_id</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">location_id</span>
 <span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">warehouse_id</span> <span class="o">=</span> <span class="n">w</span><span class="p">.</span><span class="n">warehouse_id</span>
@@ -11961,9 +11965,7 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span><span class="p">;</span>
 
 
-
-<span class="c1">-- Enhance roollup and grouping()</span>
-
+<span class="c1">-- Enhance roollup and grouping(). Grouping() returns a 1 if the aggregated number is a subtotal row over the specified column</span>
 <span class="k">SELECT</span> 
     <span class="k">c</span><span class="p">.</span><span class="n">country_name</span>
     <span class="p">,</span> <span class="n">w</span><span class="p">.</span><span class="n">warehouse_name</span>
@@ -11979,8 +11981,7 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span><span class="p">;</span>
 
 
-
-<span class="c1">--- Enhance rollup() and grouping()</span>
+<span class="c1">-- Enhance rollup() and grouping()</span>
 <span class="k">SELECT</span> 
     <span class="k">CASE</span> 
         <span class="k">WHEN</span> <span class="k">GROUPING</span><span class="p">(</span><span class="k">c</span><span class="p">.</span><span class="n">country_name</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">THEN</span> <span class="s1">&#39;Grand Total&#39;</span>
@@ -11998,8 +11999,7 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span><span class="p">;</span>
 
 
-
-<span class="c1">--Cube() </span>
+<span class="c1">-- Cube() </span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span> <span class="n">customer</span>
     <span class="p">,</span> <span class="n">pc</span><span class="p">.</span><span class="n">category_name</span> <span class="n">category</span>
     <span class="p">,</span> <span class="n">TO_CHAR</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">,</span> <span class="s1">&#39;YYYY&#39;</span><span class="p">)</span> <span class="k">year</span>     <span class="c1">-- equivalently, EXTRACT(year from o.order_date) year</span>
@@ -12014,8 +12014,7 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">customer</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="k">year</span><span class="p">;</span>
 
 
-
-<span class="c1">-- pivot()</span>
+<span class="c1">-- pivot() - summarize by a categorical variable</span>
 <span class="k">SELECT</span> <span class="o">*</span> 
 <span class="k">FROM</span>
 <span class="p">(</span>
@@ -12034,27 +12033,26 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">customer</span><span class="p">,</span> <span class="k">year</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Products in the Video Card category with the highest margin</span>
 <span class="k">SELECT</span> 
     <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
     <span class="p">,</span> <span class="n">ROUND</span><span class="p">((</span><span class="n">p</span><span class="p">.</span><span class="n">list_price</span> <span class="o">-</span> <span class="n">p</span><span class="p">.</span><span class="n">standard_cost</span><span class="p">)</span> <span class="o">/</span> <span class="n">p</span><span class="p">.</span><span class="n">standard_cost</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">||</span><span class="s1">&#39;%&#39;</span> <span class="n">margin</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span> 
-<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">product_categories</span> <span class="k">c</span> <span class="k">ON</span> <span class="n">p</span><span class="p">.</span><span class="n">category_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">category_id</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">product_categories</span> <span class="k">c</span> <span class="k">ON</span> <span class="k">c</span><span class="p">.</span><span class="n">category_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">category_id</span>
 <span class="k">WHERE</span>  <span class="k">c</span><span class="p">.</span><span class="n">category_name</span> <span class="o">=</span> <span class="s1">&#39;Video Card&#39;</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">margin</span> <span class="k">DESC</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Employees and their managers</span>
 <span class="k">SELECT</span> 
     <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="k">AS</span> <span class="n">employee_name</span>
     <span class="p">,</span> <span class="n">m</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">m</span><span class="p">.</span><span class="n">last_name</span> <span class="k">AS</span> <span class="n">manager_name</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span> <span class="n">e</span>
-<span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span> <span class="n">m</span> <span class="k">ON</span> <span class="n">e</span><span class="p">.</span><span class="n">manager_id</span> <span class="o">=</span> <span class="n">m</span><span class="p">.</span><span class="n">employee_id</span>
+<span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span> <span class="n">m</span> <span class="k">ON</span> <span class="n">m</span><span class="p">.</span><span class="n">employee_id</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">manager_id</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">manager_name</span><span class="p">;</span>
 
 
-
-<span class="c1">---</span>
+<span class="c1">-- List the managerial hierarchy, connected by arrows, for each employee</span>
 <span class="k">SELECT</span> 
     <span class="n">employee_id</span>
     <span class="p">,</span> <span class="n">first_name</span>
@@ -12066,11 +12064,15 @@ div#notebook {
 <span class="k">CONNECT</span> <span class="k">BY</span> <span class="k">PRIOR</span> <span class="n">employee_id</span> <span class="o">=</span> <span class="n">manager_id</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- List of managers (manager_id) and count of employees that they manage (using CTE)</span>
 <span class="k">WITH</span> <span class="k">result</span> <span class="k">AS</span>
 <span class="p">(</span>
-    <span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">manager_id</span>
-    <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span> <span class="n">e</span>
+    <span class="k">SELECT</span> 
+        <span class="n">employee_id</span>
+        <span class="p">,</span> <span class="n">first_name</span>
+        <span class="p">,</span> <span class="n">last_name</span>
+        <span class="p">,</span> <span class="n">manager_id</span>
+    <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span> 
     <span class="k">START</span> <span class="k">WITH</span> <span class="n">manager_id</span> <span class="k">IS</span> <span class="k">NULL</span>
     <span class="k">CONNECT</span> <span class="k">BY</span> <span class="k">PRIOR</span> <span class="n">employee_id</span> <span class="o">=</span> <span class="n">manager_id</span> 
 <span class="p">)</span>
@@ -12080,23 +12082,33 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
 
 
-
 <span class="cm">/*  June 18, 2019 */</span>
 <span class="c1">---------------------</span>
 
 <span class="c1">-- What employee has the most sales?</span>
-
-<span class="k">SELECT</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
+<span class="k">SELECT</span> 
+    <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
+    <span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="ss">&quot; &quot;</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="n">employee</span>
+    <span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span> <span class="n">e</span>
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">salesman_id</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="ss">&quot; &quot;</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">DESC</span>
 <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">ONLY</span><span class="p">;</span>
 
 
+<span class="c1">-- Similar to above: what department has the most number of employees?</span>
+<span class="k">select</span> 
+    <span class="n">d</span><span class="p">.</span><span class="n">department_id</span>
+    <span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span>
+    <span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+<span class="k">from</span> <span class="n">hr</span><span class="p">.</span><span class="n">employees</span> <span class="n">e</span>
+<span class="k">join</span> <span class="n">hr</span><span class="p">.</span><span class="n">departments</span> <span class="n">d</span> <span class="k">on</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">department_id</span>
+<span class="k">group</span> <span class="k">by</span> <span class="n">d</span><span class="p">.</span><span class="n">department_id</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">department_name</span>
+<span class="k">order</span> <span class="k">by</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">desc</span><span class="p">;</span>
+
 
 <span class="c1">-- what employee sold the most in terms of dollars?</span>
-
 <span class="k">SELECT</span> 
     <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
     <span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="n">employee</span>
@@ -12106,23 +12118,22 @@ div#notebook {
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">order_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">order_id</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">soldAmount</span> <span class="k">DESC</span>
-<span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">ONLY</span><span class="p">;</span>
-
+<span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">WITH</span> <span class="n">TIES</span><span class="p">;</span>
 
 
 <span class="c1">-- The most popular product (most quantity across all products)? display product_name and quantity</span>
-
-<span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span><span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span> <span class="n">totalSold</span>
+<span class="k">SELECT</span> 
+    <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
+    <span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
+    <span class="p">,</span> <span class="k">sum</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">)</span> <span class="n">qty</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span> 
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
-<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">totalSold</span> <span class="k">DESC</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">qty</span> <span class="k">DESC</span>
 <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="mi">5</span> <span class="k">ROWS</span> <span class="k">ONLY</span><span class="p">;</span>
 
 
-
 <span class="c1">-- What product has never been ordered?</span>
-
 <span class="k">SELECT</span> 
     <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
     <span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
@@ -12138,36 +12149,36 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">totalSold</span><span class="p">;</span>
 
 
-<span class="c1">-- method 2</span>
-<span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span><span class="p">,</span>
-<span class="k">SUM</span><span class="p">(</span> <span class="n">NVL</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span> <span class="n">totalSold</span>
+<span class="c1">-- Method 2 (NVL simplifies the CASE statement)</span>
+<span class="k">SELECT</span> 
+    <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
+    <span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
+    <span class="p">,</span> <span class="k">SUM</span><span class="p">(</span> <span class="n">NVL</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span> <span class="n">totalSold</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span> 
 <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
 <span class="k">HAVING</span> <span class="k">SUM</span><span class="p">(</span> <span class="n">NVL</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
 
-
-<span class="c1">-- what products do not exist in inventory at any warehouse?</span>
-
+<span class="c1">-- What products do not exist in inventory at any warehouse?</span>
 <span class="k">SELECT</span> 
     <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
     <span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
-    <span class="p">,</span> <span class="k">SUM</span><span class="p">(</span> <span class="n">NVL</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span> <span class="n">occuredAt</span>
+    <span class="p">,</span> <span class="k">SUM</span><span class="p">(</span> <span class="n">NVL</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span> <span class="n">qty</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span> 
 <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
-<span class="k">HAVING</span> <span class="k">SUM</span><span class="p">(</span> <span class="n">NVL</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">HAVING</span> <span class="k">SUM</span><span class="p">(</span> <span class="n">NVL</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">--</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> 
 <span class="k">WHERE</span> <span class="n">quantity</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
+<span class="c1">-- Products with zero inventories (and hence cannot be in any warehouses)</span>
 <span class="k">SELECT</span> 
-    <span class="n">i</span><span class="p">.</span><span class="n">warehouse_id</span>
+ <span class="c1">--   i.warehouse_id   (not used)</span>
     <span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
     <span class="p">,</span> <span class="n">NVL</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="n">Qty</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span> 
@@ -12189,20 +12200,17 @@ div#notebook {
 <span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">mytable</span><span class="p">;</span>
 
 
-<span class="c1">-- Create a table, put five columns: A - numeric with 3 decimals, B - character(100), </span>
-<span class="c1">-- C - date not null, D - char default &#39;Z&#39;</span>
-
+<span class="cm">/* Create a table, put five columns: A - numeric with 3 decimals, B - character(100), </span>
+<span class="cm">C - date not null, D - char default &#39;Z&#39; */</span>
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">collections</span> <span class="p">(</span>
     <span class="n">A</span> <span class="nb">NUMBER</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
     <span class="p">,</span> <span class="n">B</span> <span class="n">VARCHAR2</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
     <span class="p">,</span> <span class="k">C</span> <span class="nb">DATE</span> <span class="k">NOT</span> <span class="k">NULL</span>
-    <span class="p">,</span> <span class="n">D</span> <span class="nb">CHAR</span> <span class="k">DEFAULT</span>  <span class="s1">&#39;Z&#39;</span>
+    <span class="p">,</span> <span class="n">D</span> <span class="nb">CHAR</span> <span class="k">DEFAULT</span> <span class="s1">&#39;Z&#39;</span>
 <span class="p">);</span>
 
 
-
-<span class="c1">-- ALTER TABLE ---</span>
-
+<span class="c1">-- ALTER TABLE:  ADD</span>
 <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">collections</span>
 <span class="k">ADD</span> 
 <span class="p">(</span>
@@ -12210,12 +12218,10 @@ div#notebook {
 <span class="p">);</span>
 
 
-
 <span class="k">DESCRIBE</span> <span class="n">collections</span><span class="p">;</span>
 
 
-<span class="c1">-- modify table</span>
-
+<span class="c1">-- ALTER TABLE:  MODIFY</span>
 <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">collections</span>
 <span class="k">MODIFY</span> 
 <span class="p">(</span>
@@ -12223,36 +12229,28 @@ div#notebook {
 <span class="p">);</span>
 
 
-
-<span class="c1">-- insert new record</span>
-
+<span class="c1">-- Insert new record</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">collections</span> 
 <span class="k">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">.</span><span class="mi">456</span><span class="p">,</span> <span class="s1">&#39;Hailu&#39;</span><span class="p">,</span> <span class="s1">&#39;18-JAN-2019&#39;</span><span class="p">,</span> <span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;19-JAN-2019&#39;</span><span class="p">);</span>
-
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">collections</span> <span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="k">C</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
 <span class="k">VALUES</span> <span class="p">(</span><span class="mi">2</span><span class="p">.</span><span class="mi">456</span><span class="p">,</span> <span class="s1">&#39;Teju&#39;</span><span class="p">,</span> <span class="nb">DATE</span><span class="s1">&#39;2019-06-18&#39;</span><span class="p">,</span> <span class="nb">DATE</span><span class="s1">&#39;2019-12-13&#39;</span><span class="p">);</span>
 
 
-
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">collections</span><span class="p">;</span>
 
 
-<span class="c1">-- rename column</span>
-
+<span class="c1">-- ALTER TABLE:  RENAME COLUMN</span>
 <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">collections</span> 
 <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="n">E</span> <span class="k">TO</span> <span class="n">F</span><span class="p">;</span>
 
 
-
-<span class="c1">-- drop a column</span>
-
+<span class="c1">-- ALTER TABLE:  DROP COLUMN</span>
 <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">collections</span>
 <span class="k">DROP</span> <span class="k">COLUMN</span> <span class="n">F</span><span class="p">;</span>
 
 
-<span class="c1">-- create a view (using the keyword &#39;using&#39; avoids duplicates)</span>
-
+<span class="c1">-- Create a view. Using the keyword &#39;USING&#39; removes duplicates</span>
 <span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">warehouse_view</span> <span class="k">AS</span>
 <span class="p">(</span>
     <span class="k">SELECT</span> <span class="o">*</span> 
@@ -12266,6 +12264,7 @@ div#notebook {
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">warehouse_view</span><span class="p">;</span>
 
 
+<span class="c1">-- Extract year from date field</span>
 <span class="k">SELECT</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="k">G</span><span class="p">)</span> <span class="k">year</span>
 <span class="k">FROM</span> <span class="n">collections</span><span class="p">;</span>
 
@@ -12273,8 +12272,7 @@ div#notebook {
 <span class="k">DESCRIBE</span> <span class="n">collections</span><span class="p">;</span>
 
 
-<span class="c1">--  create a view from employees and find the tenure of employees</span>
-
+<span class="c1">--  Create a view from employees and find the tenure of employees</span>
 <span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">employees_view</span> <span class="k">AS</span>
 <span class="p">(</span>
     <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span>
@@ -12295,9 +12293,8 @@ div#notebook {
 <span class="k">SELECT</span> <span class="k">CURRENT_DATE</span> <span class="k">FROM</span> <span class="n">DUAL</span><span class="p">;</span>
 
 
-<span class="c1">-- what percentage of their credit limits did customers used in 2016?</span>
-
-<span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">creditlimits</span> <span class="k">AS</span> 
+<span class="c1">-- What percentage of their credit limits did customers used in 2016?</span>
+<span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">cl_view</span> <span class="k">AS</span> 
 <span class="p">(</span>
     <span class="k">SELECT</span> 
         <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
@@ -12312,23 +12309,21 @@ div#notebook {
     <span class="k">WHERE</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="o">=</span> <span class="s1">&#39;2016&#39;</span> <span class="k">AND</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;Shipped&#39;</span>
 <span class="p">);</span>
 
-
 <span class="k">SELECT</span> 
     <span class="n">customer_id</span>
-    <span class="p">,</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">((</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_price</span> <span class="o">-</span> <span class="n">credit_limit</span> <span class="p">)</span> <span class="o">/</span> <span class="n">credit_limit</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;%&#39;</span> <span class="n">percentused</span>
-<span class="k">FROM</span> <span class="n">creditlimits</span>
+    <span class="p">,</span> <span class="n">ROUND</span><span class="p">(</span><span class="k">AVG</span><span class="p">((</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">unit_price</span> <span class="o">-</span> <span class="n">credit_limit</span> <span class="p">)</span> <span class="o">/</span> <span class="n">credit_limit</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="o">||</span> <span class="s1">&#39;%&#39;</span> <span class="k">usage</span>
+<span class="k">FROM</span> <span class="n">cl_view</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">customer_id</span>
-<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">percentused</span> <span class="k">DESC</span><span class="p">;</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">usage</span> <span class="k">DESC</span><span class="p">;</span>
 
 
-<span class="k">DROP</span> <span class="k">VIEW</span> <span class="n">creditlimits</span><span class="p">;</span>
+<span class="k">DROP</span> <span class="k">VIEW</span> <span class="n">cl_view</span><span class="p">;</span>
 
 
 <span class="cm">/*  June 19, 2019  */</span>
 <span class="c1">----------------------</span>
 
-<span class="c1">--Find products whose list price is different from unit price</span>
-
+<span class="c1">-- Find products whose list-price is different from unit-price</span>
 <span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span>
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">i</span>
@@ -12336,21 +12331,27 @@ div#notebook {
 <span class="k">WHERE</span> <span class="n">i</span><span class="p">.</span><span class="n">unit_price</span> <span class="o">&lt;&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">list_price</span><span class="p">;</span>
 
 
-<span class="c1">---</span>
-<span class="k">SELECT</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span> 
-<span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> 
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span><span class="p">;</span>
+<span class="c1">-- Find the distinct values of order status (using GROUP BY)</span>
+<span class="k">SELECT</span> <span class="n">status</span> 
+<span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> 
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">status</span><span class="p">;</span>
 
-<span class="c1">-- will return the same result as:</span>
-
-<span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span> 
-<span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span><span class="p">;</span>
+<span class="c1">-- Equivalently, we can find the distinct values of order status (using SELECT DISTINCT)</span>
+<span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">status</span> 
+<span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span><span class="p">;</span>
 
 
 <span class="cm">/* BIND VARIABLE */</span>
+<span class="c1">-------------------</span>
+<span class="cm">/*</span>
+<span class="cm">SELECT * FROM ot.products </span>
+<span class="cm">WHERE product_id = &amp;prod</span>
 
-<span class="c1">-- count the number of orders per salesman per year (the year will be a bind variable)</span>
+<span class="cm">When the query is executed, the user is prompted for a value. The value is then substituted and the query runs. </span>
+<span class="cm">*/</span>
 
+
+<span class="c1">-- Count the number of orders per salesman per year (the year will be a bind variable)</span>
 <span class="k">SELECT</span>
     <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
     <span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="k">year</span>
@@ -12361,66 +12362,54 @@ div#notebook {
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">);</span>
 
 
-<span class="cm">/*</span>
-<span class="cm">SELECT * FROM ot.products </span>
-<span class="cm">WHERE product_id = &amp;prod</span>
-
-<span class="cm">When the query is executed, the user is prompted for a value. The value is then substituted and the query runs. </span>
-<span class="cm">*/</span>
-
-<span class="c1">-- count orders by customer by year and customer name (use two binding variables)</span>
-
+<span class="c1">-- Count orders by customer by year and customer name (use two binding variables)</span>
 <span class="n">UNDEFINE</span> <span class="n">yr</span>
 <span class="n">UNDEFINE</span> <span class="n">cust</span>
-<span class="c1">----</span>
+
 <span class="n">DEFINE</span> <span class="n">yr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">1</span>
 <span class="n">DEFINE</span> <span class="n">cust</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">2</span>
-<span class="c1">----</span>
+
 <span class="k">SELECT</span> 
     <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
+    <span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span>
     <span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="k">year</span>
     <span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
 <span class="k">WHERE</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">yr</span> <span class="k">AND</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">cust</span> 
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span><span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">cnt</span> <span class="k">DESC</span><span class="p">;</span>
 
-<span class="c1">-- Note: if the variable expects a string, then put it in quotation mark &#39;&amp;cst&#39;</span>
+<span class="cm">/* Note: if the variable expects a string, then put it in quotation mark. For example: &#39;&amp;cust_name&#39; */</span>
 
-
-<span class="c1">-- count orders by customer by year and customer name (use two binding variables)</span>
-
+<span class="c1">-- Count orders by customer by year and customer name (use two binding variables)</span>
 <span class="n">UNDEFINE</span> <span class="n">yr</span>
-<span class="n">UNDEFINE</span> <span class="n">customername</span>
-<span class="c1">----</span>
+<span class="n">UNDEFINE</span> <span class="n">cust_name</span>
+
 <span class="n">DEFINE</span> <span class="n">yr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">1</span>
-<span class="n">DEFINE</span> <span class="n">customername</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">2</span>
-<span class="c1">----</span>
+<span class="n">DEFINE</span> <span class="n">cust_name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="mi">2</span>
+
 <span class="k">SELECT</span> 
     <span class="k">c</span><span class="p">.</span><span class="n">name</span>
     <span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="k">year</span>
     <span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">customers</span> <span class="k">c</span>
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">customer_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">customer_id</span>
-<span class="k">WHERE</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">yr</span> <span class="k">AND</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&amp;customername&#39;</span> 
+<span class="k">WHERE</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">yr</span> <span class="k">AND</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&amp;cust_name&#39;</span> 
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">);</span>
 
 
 <span class="c1">-- COALESCE treats &#39;&#39; as NULL</span>
-
 <span class="k">SELECT</span> <span class="n">COALESCE</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;not empty string&#39;</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">DUAL</span><span class="p">;</span>
 
 
 <span class="c1">-- NVL performs datatype coersion, whereas COALESCE does not</span>
-
 <span class="k">SELECT</span> <span class="n">NVL</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">SYSDATE</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">DUAL</span><span class="p">;</span>        <span class="c1">-- outputs - a</span>
 
 <span class="k">SELECT</span> <span class="n">COALESCE</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">SYSDATE</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">DUAL</span><span class="p">;</span>   <span class="c1">-- outputs - ORA-00932: inconsistent datatypes: expected CHAR got DATE</span>
 
 
-<span class="c1">-- union prodcut_id from products and product_id from order_items</span>
-
+<span class="c1">-- Find the union of prodcut_id from products and product_id from order_items</span>
 <span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span>
 
@@ -12430,8 +12419,7 @@ div#notebook {
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">i</span><span class="p">;</span>
 
 
-<span class="c1">-- intersect</span>
-
+<span class="c1">-- Find the intersection of product_id from products and product_id from inventories</span>
 <span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span>
 
@@ -12441,15 +12429,13 @@ div#notebook {
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> <span class="n">i</span><span class="p">;</span>
 
 
-<span class="cm">/* get the same result using join */</span>
-
+<span class="c1">-- Get the same result using JOIN</span>
 <span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span>
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span><span class="p">;</span>
 
 
-<span class="c1">-- do the same using uncorrelated subqueries</span>
-
+<span class="c1">-- Do the same using uncorrelated subqueries</span>
 <span class="k">SELECT</span> <span class="n">product_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> 
 <span class="k">WHERE</span> <span class="n">product_id</span> <span class="k">IN</span>
@@ -12459,8 +12445,7 @@ div#notebook {
 <span class="p">);</span>
 
 
-<span class="c1">-- do the same using correlated subqueries</span>
-
+<span class="c1">-- Do the same using correlated subqueries</span>
 <span class="k">SELECT</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span> 
 <span class="k">WHERE</span> <span class="k">EXISTS</span>
@@ -12471,8 +12456,7 @@ div#notebook {
 <span class="p">);</span>
 
 
-<span class="c1">-- product id from inventories MINUS product id from order_items</span>
-
+<span class="c1">-- Find product id from inventories MINUS product id from order_items</span>
 <span class="k">SELECT</span> <span class="n">i</span><span class="p">.</span><span class="n">product_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> <span class="n">i</span>
 
@@ -12482,8 +12466,7 @@ div#notebook {
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">oi</span><span class="p">;</span>
 
 
-<span class="c1">-- do the same with correlated queries</span>
-
+<span class="c1">-- Do the same with correlated subqueries</span>
 <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">i</span><span class="p">.</span><span class="n">product_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> <span class="n">i</span> 
 <span class="k">WHERE</span> <span class="k">NOT</span> <span class="k">EXISTS</span>
@@ -12494,8 +12477,7 @@ div#notebook {
 <span class="p">);</span>
 
 
-<span class="c1">-- uncorrelated queries</span>
-
+<span class="c1">-- Do the same using uncorrelated subqueries</span>
 <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">product_id</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> 
 <span class="k">WHERE</span> <span class="n">product_id</span> <span class="k">NOT</span> <span class="k">IN</span> 
@@ -12507,29 +12489,23 @@ div#notebook {
 
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">DICTIONARY</span><span class="p">;</span>
 
-
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ALL_TABLES</span><span class="p">;</span>
-
 
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ALL_TABLES</span>
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span><span class="p">;</span>
-
 
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ALL_TABLES</span>
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="k">LIKE</span> <span class="s1">&#39;USER%&#39;</span><span class="p">;</span>
 
-
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ALL_TABLES</span>
 <span class="k">WHERE</span> <span class="k">TABLE_NAME</span> <span class="o">=</span> <span class="s1">&#39;DUAL&#39;</span><span class="p">;</span>
 
-
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">USER_TAB_COLUMNS</span><span class="p">;</span>
-
 
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">USER_TAB_COLUMNS</span>
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span><span class="p">;</span>
 
-<span class="c1">-- Common Table Expression (CTE)</span>
+<span class="c1">-- Common Table Expression (CTE) - revisited</span>
 <span class="k">WITH</span> <span class="k">result</span> <span class="k">AS</span> 
 <span class="p">(</span>
     <span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
@@ -12549,23 +12525,23 @@ div#notebook {
 <span class="p">)</span>
 <span class="k">SELECT</span> <span class="n">col</span><span class="p">,</span> <span class="n">cnt</span> <span class="k">FROM</span> <span class="n">result_CTE</span><span class="p">;</span>
 
-<span class="c1">-- the two CTEs above would produce the same results as their respective inside subqueries</span>
-<span class="c1">-- so, the CTE use case here is unnecessary!</span>
+<span class="cm">/* The two CTEs above would produce the same results as their respective inside subqueries. So, the CTE use cases here seem unnecessary! */</span>
 
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">USER_TAB_COLUMNS</span><span class="p">;</span>
 
 
-<span class="c1">-- count the number of columns in the OT schema by data type</span>
-
+<span class="c1">-- Count the number of columns in the OT schema by data type</span>
 <span class="k">SELECT</span> <span class="n">DATA_TYPE</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
 <span class="k">FROM</span> <span class="n">ALL_TAB_COLUMNS</span>
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">DATA_TYPE</span><span class="p">;</span>
 
 
-<span class="c1">-- count the number of columns in the OT schema by data type and column name</span>
-
-<span class="k">SELECT</span> <span class="n">DATA_TYPE</span><span class="p">,</span> <span class="k">COLUMN_NAME</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
+<span class="c1">-- Count the number of columns in the OT schema by data type and column name</span>
+<span class="k">SELECT</span> 
+    <span class="n">DATA_TYPE</span>
+    <span class="p">,</span> <span class="k">COLUMN_NAME</span>
+    <span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
 <span class="k">FROM</span> <span class="n">ALL_TAB_COLUMNS</span> 
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">ROLLUP</span><span class="p">(</span><span class="n">DATA_TYPE</span><span class="p">,</span> <span class="k">COLUMN_NAME</span><span class="p">)</span>
@@ -12573,7 +12549,6 @@ div#notebook {
 
 
 <span class="c1">-- Using PIVOT() </span>
-
 <span class="k">SELECT</span> <span class="o">*</span> 
 <span class="k">FROM</span> 
 <span class="p">(</span>
@@ -12584,27 +12559,30 @@ div#notebook {
 <span class="n">PIVOT</span> <span class="p">(</span> <span class="k">COUNT</span><span class="p">(</span><span class="k">COLUMN_NAME</span><span class="p">)</span> <span class="k">FOR</span> <span class="n">DATA_TYPE</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;CHAR&#39;</span><span class="p">,</span> <span class="s1">&#39;NUMBER&#39;</span><span class="p">,</span> <span class="s1">&#39;DATE&#39;</span><span class="p">,</span> <span class="s1">&#39;VARCHAR2&#39;</span><span class="p">)</span> <span class="p">);</span>
 
 
-<span class="cm">/* Constraints */</span>
+<span class="cm">/* CONSTRAINTS */</span>
 <span class="c1">-----------------</span>
 
 <span class="c1">-- How many constraints do we have in the OT schema by type?</span>
 
+<span class="c1">-- First, see all fields in the ALL_CONSTRAINT table</span>
 <span class="k">SELECT</span> <span class="o">*</span> 
 <span class="k">FROM</span> <span class="n">ALL_CONSTRAINTS</span>
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span><span class="p">;</span>
 
-
+<span class="c1">-- Secondly, what are the distinct constraint types in the ALL_CONSTRAINT table</span>
 <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">CONSTRAINT_TYPE</span>
 <span class="k">FROM</span> <span class="n">ALL_CONSTRAINTS</span>
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span><span class="p">;</span>
 
 
+<span class="c1">-- Count the constraints by type</span>
 <span class="k">SELECT</span> <span class="n">CONSTRAINT_TYPE</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> 
 <span class="k">FROM</span> <span class="n">ALL_CONSTRAINTS</span>
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">CONSTRAINT_TYPE</span><span class="p">;</span>
 
 
+<span class="c1">-- Using CUBE()</span>
 <span class="k">SELECT</span> <span class="n">CONSTRAINT_TYPE</span><span class="p">,</span> <span class="k">TABLE_NAME</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
 <span class="k">FROM</span> <span class="n">ALL_CONSTRAINTS</span>
 <span class="k">WHERE</span> <span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span>
@@ -12613,7 +12591,7 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">CONSTRAINT_TYPE</span> <span class="n">NULLS</span> <span class="k">FIRST</span><span class="p">;</span>
 
 
-<span class="c1">--</span>
+<span class="c1">-- Select constraint_name, table_name, column_name from ALL_CONS_COLUMNS table and constraint type from ALL_CONSTRAINTS table.</span>
 <span class="k">SELECT</span> <span class="n">t1</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">TABLE_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">COLUMN_NAME</span><span class="p">,</span> <span class="n">t2</span><span class="p">.</span><span class="n">CONSTRAINT_TYPE</span>
 <span class="k">FROM</span>
 <span class="p">(</span>
@@ -12632,15 +12610,20 @@ div#notebook {
 <span class="k">ON</span> <span class="n">t1</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span> <span class="o">=</span> <span class="n">t2</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span><span class="p">;</span>
 
 
-<span class="k">SELECT</span> <span class="n">t1</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">TABLE_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">COLUMN_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">OWNER</span><span class="p">,</span> <span class="n">t2</span><span class="p">.</span><span class="n">CONSTRAINT_TYPE</span>
+<span class="c1">-- The above query can be executed more efficiently as follows:</span>
+<span class="k">SELECT</span> 
+    <span class="n">t1</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span>
+    <span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">TABLE_NAME</span>
+    <span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">COLUMN_NAME</span>
+    <span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">OWNER</span>
+    <span class="p">,</span> <span class="n">t2</span><span class="p">.</span><span class="n">CONSTRAINT_TYPE</span>
 <span class="k">FROM</span> <span class="n">ALL_CONS_COLUMNS</span> <span class="n">t1</span>
 <span class="k">JOIN</span> <span class="n">ALL_CONSTRAINTS</span> <span class="n">t2</span> 
 <span class="k">ON</span> <span class="n">t1</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span> <span class="o">=</span> <span class="n">t2</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span>
 <span class="k">WHERE</span> <span class="n">t1</span><span class="p">.</span><span class="k">owner</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span><span class="p">;</span>
 
 
-<span class="c1">-- Correlated queries</span>
-
+<span class="c1">-- Correlated subqueries</span>
 <span class="k">SELECT</span> <span class="n">t1</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">TABLE_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">COLUMN_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">OWNER</span>
 <span class="k">FROM</span> <span class="n">ALL_CONS_COLUMNS</span> <span class="n">t1</span>
 <span class="k">WHERE</span> <span class="k">EXISTS</span>
@@ -12650,7 +12633,8 @@ div#notebook {
     <span class="k">WHERE</span> <span class="n">t2</span><span class="p">.</span><span class="n">CONSRAIN_NAME</span> <span class="o">=</span> <span class="n">t1</span><span class="p">.</span><span class="n">CONSRAIN_NAME</span> <span class="k">AND</span> <span class="n">t1</span><span class="p">.</span><span class="k">OWNER</span> <span class="o">=</span> <span class="s1">&#39;OT&#39;</span>
 <span class="p">);</span>
 
-<span class="c1">-- Ucorrelated</span>
+
+<span class="c1">-- Ucorrelated subqueries</span>
 <span class="k">SELECT</span> <span class="n">t1</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">TABLE_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">COLUMN_NAME</span><span class="p">,</span> <span class="n">t1</span><span class="p">.</span><span class="k">OWNER</span>
 <span class="k">FROM</span> <span class="n">ALL_CONS_COLUMNS</span> <span class="n">t1</span>
 <span class="k">WHERE</span> <span class="n">t1</span><span class="p">.</span><span class="k">CONSTRAINT_NAME</span> <span class="k">IN</span>
@@ -12664,7 +12648,6 @@ div#notebook {
 <span class="c1">-------------------</span>
 
 <span class="c1">-- What is the most common first name in contacts</span>
-
 <span class="k">SELECT</span> <span class="n">first_name</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">count</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">first_name</span>
@@ -12673,7 +12656,7 @@ div#notebook {
 <span class="c1">--FETCH FIRST ROW ONLY;</span>
 
 
-<span class="c1">-- </span>
+<span class="c1">-- Contacts that have the most commone first name (using uncorrelated subqueries and CTE) </span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">last_name</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span> <span class="k">c</span>
 <span class="k">WHERE</span> <span class="k">c</span><span class="p">.</span><span class="n">first_name</span> <span class="k">in</span>
@@ -12684,13 +12667,29 @@ div#notebook {
         <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span> <span class="n">c2</span>
         <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">c2</span><span class="p">.</span><span class="n">first_name</span>
         <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">count</span> <span class="k">DESC</span>
-        <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">ONLY</span>
+        <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">WITH</span> <span class="n">TIES</span>
     <span class="p">)</span>
 <span class="k">SELECT</span> <span class="n">first_name</span> 
 <span class="k">FROM</span> <span class="k">result</span>
 <span class="p">);</span>
 
-<span class="c1">-- shorter</span>
+
+<span class="c1">-- Contacts that have the most commone first name (using CTE and JOIN) </span>
+<span class="k">WITH</span> <span class="n">temp</span> <span class="k">AS</span>
+<span class="p">(</span>
+    <span class="k">SELECT</span> <span class="n">first_name</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span> 
+    <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">first_name</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">cnt</span> <span class="k">DESC</span>
+    <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">WITH</span> <span class="n">TIES</span>
+<span class="p">)</span>
+<span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">last_name</span> 
+<span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span> <span class="k">c</span>
+<span class="k">JOIN</span> <span class="n">temp</span> <span class="k">ON</span> <span class="n">temp</span><span class="p">.</span><span class="n">first_name</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">first_name</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">;</span>
+
+
+<span class="c1">-- This seems an unreliable way of approaching the above problem (tested it on ORACLE Live SQL and it did not produce the right result)</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">last_name</span> 
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span> <span class="k">c</span>
 <span class="k">WHERE</span> <span class="k">c</span><span class="p">.</span><span class="n">first_name</span> <span class="k">IN</span>
@@ -12698,14 +12697,13 @@ div#notebook {
     <span class="k">SELECT</span> <span class="n">c2</span><span class="p">.</span><span class="n">first_name</span> 
     <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span> <span class="n">c2</span>
     <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">c2</span><span class="p">.</span><span class="n">first_name</span>
-    <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">DESC</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">DESC</span>    <span class="c1">-- aggregation comes after GROUP BY</span>
     <span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">ONLY</span>
 <span class="p">)</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">last_name</span><span class="p">;</span>
 
 
 <span class="c1">--- In what month and year were the most employees hired</span>
-
 <span class="k">SELECT</span>
     <span class="k">EXTRACT</span><span class="p">(</span><span class="k">month</span> <span class="k">FROM</span> <span class="n">hire_date</span><span class="p">)</span> <span class="n">hireMonth</span>
     <span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">hire_date</span><span class="p">)</span> <span class="n">hireYear</span> 
@@ -12716,7 +12714,6 @@ div#notebook {
 
 
 <span class="c1">-- Products in inventories that never sold?</span>
-
 <span class="k">SELECT</span> <span class="n">DINSTINCT</span> 
     <span class="n">p</span><span class="p">.</span><span class="n">product_id</span> 
     <span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
@@ -12734,7 +12731,6 @@ div#notebook {
 
 
 <span class="c1">-- Create a table with two columns A &amp; B, where column A - PK, column B - not null</span>
-
 <span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">tests</span>
 <span class="p">(</span>
     <span class="n">A</span> <span class="nb">NUMBER</span>
@@ -12759,9 +12755,7 @@ div#notebook {
     <span class="k">C</span> <span class="nb">NUMBER</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="k">CHECK</span> <span class="p">(</span><span class="k">C</span> <span class="k">BETWEEN</span> <span class="mi">1</span> <span class="k">AND</span> <span class="mi">100</span><span class="p">)</span>
 <span class="p">);</span>
 
-
-<span class="c1">-- alternatively</span>
-
+<span class="c1">-- Alternatively:</span>
 <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">tests</span> 
 <span class="k">ADD</span> <span class="k">CONSTRAINT</span> <span class="k">C</span> <span class="k">CHECK</span> <span class="p">(</span><span class="k">C</span> <span class="k">BETWEEN</span> <span class="mi">1</span> <span class="k">AND</span> <span class="mi">100</span><span class="p">);</span>
 
@@ -12770,10 +12764,9 @@ div#notebook {
 <span class="k">VALUES</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Hailu&#39;</span><span class="p">,</span> <span class="mi">12</span><span class="p">);</span>
 
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tests</span>
-<span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Takele&#39;</span><span class="p">,</span> <span class="mi">172</span><span class="p">.</span><span class="mi">5</span><span class="p">);</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Takele&#39;</span><span class="p">,</span> <span class="mi">172</span><span class="p">.</span><span class="mi">5</span><span class="p">);</span>   <span class="c1">-- will be rejected by the constraint placed on C</span>
 
-<span class="c1">-- insert more values</span>
-
+<span class="c1">-- Insert more values</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tests</span>
 <span class="k">WITH</span> <span class="k">names</span> <span class="k">AS</span>
 <span class="p">(</span>
@@ -12792,7 +12785,7 @@ div#notebook {
     <span class="n">D</span> <span class="nb">DATE</span>
 <span class="p">);</span>
 
-<span class="c1">-- insert more data to the altered table</span>
+<span class="c1">-- Insert more data into the altered table</span>
 <span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">tests</span>
 <span class="k">WITH</span> <span class="n">names_CTE</span> <span class="k">AS</span>
 <span class="p">(</span>
@@ -12807,9 +12800,10 @@ div#notebook {
 <span class="k">WHERE</span> <span class="n">B</span> <span class="o">=</span> <span class="s1">&#39;Teju&#39;</span><span class="p">;</span>
 
 
-<span class="c1">-- CREATE [UNIQUE] INDEX index_name ON table_name (column_list);</span>
-<span class="c1">-- DROP INDEX [schema_name.]index_name;</span>
-
+<span class="cm">/*</span>
+<span class="cm">   CREATE [UNIQUE] INDEX index_name ON table_name (column_list);</span>
+<span class="cm">   DROP INDEX [schema_name.]index_name;</span>
+<span class="cm">*/</span>
 <span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx</span> <span class="k">ON</span> <span class="n">tests</span> <span class="p">(</span><span class="n">B</span><span class="p">);</span>
 
 <span class="k">DESCRIBE</span> <span class="n">tests</span><span class="p">;</span>
@@ -12817,16 +12811,15 @@ div#notebook {
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">tests</span><span class="p">;</span>
 
 
-<span class="c1">-- create view which shows : employees first name last name, their number of orders and total dollar amount by year</span>
-
-<span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">myview</span> <span class="k">AS</span> 
+<span class="c1">-- Create a view which shows : employees first name last name, their number of orders and total dollar amount by year</span>
+<span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">emp_view</span> <span class="k">AS</span> 
 <span class="p">(</span>
     <span class="k">SELECT</span> 
         <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
         <span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span>
         <span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span>
         <span class="p">,</span> <span class="k">EXTRACT</span> <span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="k">year</span>
-        <span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">i</span><span class="p">.</span><span class="n">unit_price</span> <span class="n">total</span> <span class="n">total</span>
+        <span class="p">,</span> <span class="n">i</span><span class="p">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">i</span><span class="p">.</span><span class="n">unit_price</span> <span class="n">orderAmount</span>
     <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span> <span class="n">e</span>
     <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">salesman_id</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
     <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">order_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">order_id</span>
@@ -12838,16 +12831,35 @@ div#notebook {
     <span class="p">,</span> <span class="n">first_name</span>
     <span class="p">,</span> <span class="n">last_name</span>
     <span class="p">,</span> <span class="k">year</span>
-    <span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">total</span><span class="p">)</span> <span class="n">total</span>
+    <span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">orderAmount</span><span class="p">)</span> <span class="n">total</span>
     <span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="n">cnt</span>
-<span class="k">FROM</span> <span class="n">myview</span>
+<span class="k">FROM</span> <span class="n">emp_view</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">employee_id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span><span class="p">,</span> <span class="k">year</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">toal</span> <span class="k">DESC</span><span class="p">,</span> <span class="n">cnt</span> <span class="k">DESC</span><span class="p">;</span>
 
 
-<span class="k">DROP</span> <span class="k">VIEW</span> <span class="n">myview</span><span class="p">;</span>
+<span class="c1">-- Create a view which shows : employees first name last name, their number of orders and total dollar amount by year</span>
+<span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">emp_view</span> <span class="k">AS</span> 
+<span class="p">(</span>
+    <span class="k">SELECT</span> 
+        <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
+        <span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span>
+        <span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span>
+        <span class="p">,</span> <span class="k">EXTRACT</span> <span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="k">year</span>
+        <span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">i</span><span class="p">.</span><span class="n">unit_price</span> <span class="n">orderAmount</span>
+        <span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+    <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span> <span class="n">e</span>
+    <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span> <span class="n">o</span> <span class="k">ON</span> <span class="n">o</span><span class="p">.</span><span class="n">salesman_id</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
+    <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">order_id</span> <span class="o">=</span> <span class="n">o</span><span class="p">.</span><span class="n">order_id</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span><span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="k">year</span>
+    <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">orderAmount</span> <span class="k">DESC</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">DESC</span>
+<span class="p">);</span>
 
 
+<span class="k">DROP</span> <span class="k">VIEW</span> <span class="n">emp_view</span><span class="p">;</span>
+
+
+<span class="c1">-- ROWNUM</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> 
 <span class="p">(</span>
     <span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">ROWNUM</span> <span class="k">AS</span> <span class="n">rn</span>
@@ -12861,20 +12873,19 @@ div#notebook {
 <span class="k">WHERE</span> <span class="n">rn</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 
 
-<span class="c1">-- the person that is hired second in the company</span>
-
+<span class="c1">-- The person that is hired second in the company</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span>
 <span class="p">(</span>
     <span class="k">SELECT</span> 
         <span class="n">employee_id</span>
-        <span class="p">,</span> <span class="n">employee</span>
+        <span class="p">,</span> <span class="n">emp_name</span>
         <span class="p">,</span> <span class="n">hire_date</span>
         <span class="p">,</span> <span class="n">ROWNUM</span> <span class="n">rn</span>
     <span class="k">FROM</span>
     <span class="p">(</span>
         <span class="k">SELECT</span> 
             <span class="n">employee_id</span>
-            <span class="p">,</span> <span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">last_name</span> <span class="n">employee</span>
+            <span class="p">,</span> <span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">last_name</span> <span class="n">emp_name</span>
             <span class="p">,</span> <span class="n">hire_date</span> 
         <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span>
         <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">hire_date</span>
@@ -12882,12 +12893,13 @@ div#notebook {
 <span class="p">)</span>
 <span class="k">WHERE</span> <span class="n">rn</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 
-<span class="c1">-- find employees that are hired 8th (with ties)</span>
+
+<span class="c1">-- Find employees that are hired 8th (with ties)</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span>
 <span class="p">(</span>
     <span class="k">SELECT</span> 
         <span class="n">employee_id</span>
-        <span class="p">,</span> <span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">last_name</span> <span class="n">name</span>
+        <span class="p">,</span> <span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">last_name</span> <span class="n">emp_name</span>
         <span class="p">,</span> <span class="n">hire_date</span>
         <span class="p">,</span> <span class="n">DENSE_RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">hire_date</span><span class="p">)</span> <span class="n">drn</span>
     <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">employees</span>
@@ -12895,7 +12907,7 @@ div#notebook {
 <span class="k">WHERE</span> <span class="n">drn</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
 
 
-
+<span class="c1">-- Order employees by total revenue and total profit they generated</span>
 <span class="k">SELECT</span> 
     <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
     <span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="n">name</span>
@@ -12909,9 +12921,7 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">total</span> <span class="k">DESC</span><span class="p">,</span> <span class="n">profit</span> <span class="k">DESC</span><span class="p">;</span>
 
 
-
 <span class="c1">-- The highest selling product by year</span>
-
 <span class="k">CREATE</span> <span class="k">VIEW</span> <span class="n">superview</span> <span class="k">AS</span>
 <span class="p">(</span>
     <span class="k">SELECT</span> <span class="n">product_id</span><span class="p">,</span> <span class="n">product_name</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> 
@@ -12932,7 +12942,6 @@ div#notebook {
 <span class="p">);</span>
 
 
-
 <span class="k">SELECT</span> <span class="n">s</span><span class="p">.</span><span class="n">product_id</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="n">product_name</span><span class="p">,</span> <span class="n">s</span><span class="p">.</span><span class="k">year</span><span class="p">,</span>  <span class="n">s</span><span class="p">.</span><span class="n">total</span>
 <span class="k">FROM</span> <span class="n">superview</span> <span class="n">s</span> 
 <span class="k">JOIN</span>
@@ -12944,8 +12953,7 @@ div#notebook {
 <span class="k">ON</span> <span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="k">year</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="k">year</span> <span class="k">AND</span> <span class="n">temp</span><span class="p">.</span><span class="n">total</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">total</span><span class="p">);</span>
 
 
-<span class="c1">--method 2 (better way)</span>
-
+<span class="c1">--Method 2 (better way)</span>
 <span class="k">SELECT</span> 
     <span class="n">product_id</span>
     <span class="p">,</span> <span class="n">product_name</span>
@@ -12965,8 +12973,7 @@ div#notebook {
 <span class="k">WHERE</span> <span class="n">myrank</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
 
-<span class="c1">-- better yet</span>
-
+<span class="c1">-- Even better:</span>
 <span class="k">SELECT</span> 
     <span class="n">product_id</span>
     <span class="p">,</span> <span class="n">product_name</span>
@@ -12986,8 +12993,10 @@ div#notebook {
 <span class="k">WHERE</span> <span class="n">myrank</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 
 
-<span class="c1">-- ASIDE: CASE expression</span>
+<span class="cm">/* ASIDE: CASE expressions */</span>
 
+
+<span class="c1">-- CASE expression with the ORDER BY clause</span>
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">locations</span>
 <span class="k">WHERE</span> <span class="n">country_id</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;US&#39;</span><span class="p">,</span> <span class="s1">&#39;CA&#39;</span><span class="p">,</span> <span class="s1">&#39;UK&#39;</span><span class="p">)</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">country_id</span><span class="p">,</span>
@@ -12997,7 +13006,7 @@ div#notebook {
     <span class="k">END</span><span class="p">;</span> 
 
 
-
+<span class="c1">-- CASE expression with the HAVING clause</span>
 <span class="k">SELECT</span> 
     <span class="n">p</span><span class="p">.</span><span class="n">product_name</span>
     <span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">category_id</span>
@@ -13011,7 +13020,7 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">p</span><span class="p">.</span><span class="n">product_name</span><span class="p">;</span>
 
 
-
+<span class="c1">-- CASE expression with UPDATE-SET</span>
 <span class="k">UPDATE</span> <span class="n">products</span>
 <span class="k">SET</span> <span class="n">list_price</span> <span class="o">=</span> 
     <span class="k">CASE</span> 
@@ -13022,20 +13031,17 @@ div#notebook {
 
 
 <span class="c1">-- To see your own previllages</span>
-
 <span class="k">SELECT</span> <span class="o">*</span>
 <span class="k">FROM</span> <span class="n">USER_SYS_PRIVS</span><span class="p">;</span>
 
 
-<span class="c1">-- select from employees the ones that have country code 91</span>
+<span class="c1">-- Select from employees the ones that have country code 91</span>
+<span class="k">SELECT</span> <span class="n">phone</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">last_name</span> 
+<span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span> 
+<span class="k">WHERE</span> <span class="n">phone</span> <span class="k">LIKE</span> <span class="s1">&#39;+91%&#39;</span><span class="p">;</span>                  <span class="c1">-- alternatively: WHERE REGEXP_LIKE (phone, &#39;+91(*)&#39;);</span>
 
-<span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">phone</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">first_name</span><span class="p">,</span> <span class="k">c</span><span class="p">.</span><span class="n">last_name</span> 
-<span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">contacts</span> <span class="k">c</span>
-<span class="k">WHERE</span> <span class="k">c</span><span class="p">.</span><span class="n">phone</span> <span class="k">LIKE</span> <span class="s1">&#39;+91%&#39;</span><span class="p">;</span>  <span class="c1">-- alternatively: WHERE REGEXP_LIKE (c.phone, &#39;+91(*)&#39;);</span>
 
-
-<span class="c1">--- list all the countries that don&#39;t have warehouses</span>
-
+<span class="c1">-- List all the countries that don&#39;t have warehouses</span>
 <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">countries</span> <span class="k">c</span>
 <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">locations</span> <span class="n">l</span> <span class="k">ON</span> <span class="n">l</span><span class="p">.</span><span class="n">country_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">country_id</span>
@@ -13044,8 +13050,7 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span><span class="p">;</span>
 
 
-<span class="c1">-- do the same using the EXISTS clause</span>
-
+<span class="c1">-- Do the same using the EXISTS clause</span>
 <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">countries</span> <span class="k">c</span>
 <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">locations</span> <span class="n">l</span> <span class="k">ON</span> <span class="n">l</span><span class="p">.</span><span class="n">country_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">country_id</span>
@@ -13058,12 +13063,11 @@ div#notebook {
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span><span class="p">;</span>
 
 
-<span class="c1">-- list countries that don&#39;t have warehouses, using EXISTS</span>
-
+<span class="c1">-- List countries that don&#39;t have warehouses, using EXISTS</span>
 <span class="k">SELECT</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">countries</span> <span class="k">c</span>
 <span class="k">WHERE</span> <span class="k">NOT</span> <span class="k">EXISTS</span>
-    <span class="p">(</span>
+<span class="p">(</span>
     <span class="k">SELECT</span> <span class="mi">1</span>
     <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">locations</span> <span class="n">l</span>
     <span class="k">WHERE</span> <span class="k">c</span><span class="p">.</span><span class="n">country_id</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">country_id</span>  
@@ -13073,13 +13077,14 @@ div#notebook {
         <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">warehouses</span> <span class="n">w</span>
         <span class="k">WHERE</span> <span class="n">l</span><span class="p">.</span><span class="n">location_id</span> <span class="o">=</span> <span class="n">w</span><span class="p">.</span><span class="n">location_id</span>
      <span class="p">)</span>
-    <span class="p">);</span>
+<span class="p">);</span>
 
-<span class="c1">-- Note: of the three queries above to determine countries that don&#39;t have warehouses,</span>
-<span class="c1">-- the two earlier queries wrongly include Canada as a country with no warehouse, whereas</span>
-<span class="c1">-- the last one gives the correct answer.</span>
+<span class="cm">/* Note: of the three queries above to determine countries that don&#39;t have warehouses,</span>
+<span class="cm">the two earlier queries wrongly include Canada as a country with no warehouse, whereas</span>
+<span class="cm">the last one gives the correct answer. */</span>
 
 
+<span class="c1">-- There is a location in Canada where there is warehouse and there is also a location where there is no warehouse</span>
 <span class="k">SELECT</span> <span class="o">*</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">countries</span> <span class="k">c</span>
 <span class="k">LEFT</span> <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">locations</span> <span class="n">l</span> <span class="k">ON</span> <span class="n">l</span><span class="p">.</span><span class="n">country_id</span> <span class="o">=</span> <span class="k">c</span><span class="p">.</span><span class="n">country_id</span>
@@ -13087,9 +13092,7 @@ div#notebook {
 <span class="k">WHERE</span> <span class="k">c</span><span class="p">.</span><span class="n">country_name</span> <span class="o">=</span> <span class="s1">&#39;Canada&#39;</span><span class="p">;</span>
 
 
-
-<span class="c1">-- what warehouses don&#39;t store product_id=13?</span>
-
+<span class="c1">-- What warehouses don&#39;t store product_id=13?</span>
 <span class="k">SELECT</span> <span class="k">DISTINCT</span>  <span class="n">w</span><span class="p">.</span><span class="n">warehouse_id</span><span class="p">,</span> <span class="n">w</span><span class="p">.</span><span class="n">warehouse_name</span>
 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">inventories</span> <span class="n">i</span>
 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">warehouses</span> <span class="n">w</span> <span class="k">ON</span> <span class="n">w</span><span class="p">.</span><span class="n">warehouse_id</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">warehouse_id</span>
@@ -13097,8 +13100,7 @@ div#notebook {
 
 
 
-<span class="c1">-- what is the position of the manager that stockers report to?</span>
-
+<span class="c1">-- What is the position of the manager that stockers report to?</span>
 <span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">managertitle</span>
 <span class="k">FROM</span>
 <span class="p">(</span>
@@ -13113,7 +13115,6 @@ div#notebook {
 
 
 <span class="c1">-- Which employee has the most canceled orders?</span>
-
 <span class="k">SELECT</span> 
     <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span>
     <span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span> <span class="n">employee</span>
@@ -13123,12 +13124,10 @@ div#notebook {
 <span class="k">WHERE</span> <span class="n">o</span><span class="p">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;Canceled&#39;</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">e</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">first_name</span> <span class="o">||</span> <span class="s1">&#39; &#39;</span> <span class="o">||</span> <span class="n">e</span><span class="p">.</span><span class="n">last_name</span>
 <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">cnt</span> <span class="k">DESC</span>
-<span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">WITH</span> <span class="n">TiES</span><span class="p">:</span>
+<span class="k">FETCH</span> <span class="k">FIRST</span> <span class="k">ROW</span> <span class="k">WITH</span> <span class="n">TiES</span><span class="p">;</span>
 
 
-
-<span class="c1">--- What category has the most sales per year? </span>
-
+<span class="c1">-- What category has the most sales per year? </span>
 <span class="k">SELECT</span> <span class="n">category</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="n">total</span>
 <span class="k">FROM</span>
 <span class="p">(</span>
@@ -13140,13 +13139,13 @@ div#notebook {
         <span class="p">,</span> <span class="n">RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="n">PARTITION</span> <span class="k">BY</span> <span class="k">year</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">total</span> <span class="k">DESC</span><span class="p">)</span> <span class="n">rank</span>
     <span class="k">FROM</span>
     <span class="p">(</span>
-        <span class="k">WITH</span> <span class="n">myview</span> <span class="k">AS</span>
+        <span class="k">WITH</span> <span class="n">temp</span> <span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span> <span class="k">AS</span>
         <span class="p">(</span>
                 <span class="k">SELECT</span> 
-                    <span class="n">pc</span><span class="p">.</span><span class="n">category_name</span> <span class="n">category</span>
-                    <span class="p">,</span> <span class="n">pc</span><span class="p">.</span><span class="n">category_id</span> <span class="n">id</span>
-                    <span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span> <span class="k">year</span>
-                    <span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">i</span><span class="p">.</span><span class="n">unit_price</span><span class="p">)</span> <span class="n">total</span>
+                    <span class="n">pc</span><span class="p">.</span><span class="n">category_name</span> 
+                    <span class="p">,</span> <span class="n">pc</span><span class="p">.</span><span class="n">category_id</span> 
+                    <span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span>
+                    <span class="p">,</span> <span class="k">SUM</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="n">quantity</span> <span class="o">*</span> <span class="n">i</span><span class="p">.</span><span class="n">unit_price</span><span class="p">)</span> 
                 <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">product_categories</span> <span class="n">pc</span>
                 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">products</span> <span class="n">p</span> <span class="k">ON</span> <span class="n">p</span><span class="p">.</span><span class="n">category_id</span> <span class="o">=</span> <span class="n">pc</span><span class="p">.</span><span class="n">category_id</span>
                 <span class="k">JOIN</span> <span class="n">ot</span><span class="p">.</span><span class="n">order_items</span> <span class="n">i</span> <span class="k">ON</span> <span class="n">i</span><span class="p">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">product_id</span>
@@ -13154,8 +13153,8 @@ div#notebook {
                 <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">pc</span><span class="p">.</span><span class="n">category_name</span><span class="p">,</span> <span class="n">pc</span><span class="p">.</span><span class="n">category_id</span><span class="p">,</span> <span class="k">EXTRACT</span><span class="p">(</span><span class="k">year</span> <span class="k">FROM</span> <span class="n">o</span><span class="p">.</span><span class="n">order_date</span><span class="p">)</span>
                 <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">year</span><span class="p">,</span> <span class="n">total</span> <span class="k">DESC</span>
         <span class="p">)</span>
-        <span class="k">SELECT</span> <span class="n">category</span><span class="p">,</span> <span class="n">id</span><span class="p">,</span> <span class="k">year</span><span class="p">,</span> <span class="n">total</span>
-        <span class="k">FROM</span> <span class="n">myview</span>
+        <span class="k">SELECT</span> <span class="o">*</span>
+        <span class="k">FROM</span> <span class="n">temp</span>
     <span class="p">)</span>
 <span class="p">)</span>
 <span class="k">WHERE</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -13169,43 +13168,44 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Summary---Rollup(),-Grouping(),-Cube(),-Pivot()">Summary - Rollup(), Grouping(), Cube(), Pivot()<a class="anchor-link" href="#Summary---Rollup(),-Grouping(),-Cube(),-Pivot()">&#182;</a></h3><div class="highlight"><pre><span></span><span class="c1">--- Rollup():  create subtotals at each level in hierarchical structure. </span>
-
 <span class="k">SELECT</span> <span class="n">columnlist</span><span class="p">,</span> <span class="k">function</span>
 <span class="k">FROM</span> <span class="n">tablelist</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">ROLLUP</span> <span class="p">(</span><span class="n">columnlist</span><span class="p">)</span>
 
 
 <span class="c1">--- Grouping(): returns a 1 if the aggregated number is a subtotal row over the specified column</span>
-
 <span class="k">SELECT</span> <span class="n">columnlist</span><span class="p">,</span> <span class="p">[,</span><span class="n">CaseExpression</span><span class="p">]</span>
 <span class="k">GROUPING</span><span class="p">(</span><span class="n">columns</span><span class="p">),</span> <span class="k">aggregate</span> <span class="k">function</span>
 <span class="k">FROM</span> <span class="n">tablelist</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">ROLLUP</span> <span class="p">(</span><span class="n">columnlist</span><span class="p">)</span>
 
 
-<span class="c1">--- Cube(): </span>
-
+<span class="c1">--- Cube(): the CUBE is a subclause of the GROUP BY clasue that allows you to generate multiple grouping sets. </span>
 <span class="k">SELECT</span> <span class="n">columnlist</span><span class="p">,</span> <span class="k">aggregate</span> <span class="k">function</span>
 <span class="k">FROM</span> <span class="n">tablelist</span>
 <span class="k">GROUP</span> <span class="k">BY</span> <span class="k">CUBE</span> <span class="p">(</span><span class="n">columnlist</span><span class="p">)</span>
 
 
 <span class="c1">--- PIVOT(): summarizes aggregate using PIVOT</span>
-
 <span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="p">(</span><span class="n">query</span><span class="p">)</span>
 <span class="n">PIVOT</span> <span class="p">(</span> <span class="n">aggregate_function</span><span class="p">(</span><span class="k">column</span><span class="p">)</span>
        <span class="k">FOR</span> <span class="n">column_for_column_headers</span>
        <span class="k">IN</span> <span class="n">pivot_column_values</span><span class="p">)</span>
 </pre></div>
-<h4 id="NVL">NVL<a class="anchor-link" href="#NVL">&#182;</a></h4><p><strong>Syntax</strong></p>
-<p><code>NVL(expr1, expr2)</code></p>
-<p><strong>Purpose</strong></p>
-<p><code>NVL</code> lets you replace null (returned as a blank) with a string in the results of a query. If <code>expr1</code> is null, then <code>NVL</code> returns <code>expr2</code>. If <code>expr1</code> is not null, then <code>NVL</code> returns <code>expr1</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Bind-Variables">Bind Variables<a class="anchor-link" href="#Bind-Variables">&#182;</a></h3><ul>
-<li><p>Variable whose value is not declared in the statement, but it is requested and substituted at run time. Format:  <code>&amp;variable_name</code></p>
-</li>
-<li><p>E.g.</p>
-</li>
+<li>Variable whose value is not declared in the statement, but it is requested and substituted at run time. Format: </li>
+</ul>
+<p><code>&amp;variable_name</code></p>
+<ul>
+<li>Example: </li>
 </ul>
 <div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">OT</span><span class="p">.</span><span class="n">PRODUCTS</span> <span class="k">WHERE</span> <span class="n">PRODUCT_NAME</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">prod</span>
 </pre></div>
@@ -13213,8 +13213,12 @@ div#notebook {
 <h3 id="Null-Handling">Null Handling<a class="anchor-link" href="#Null-Handling">&#182;</a></h3><ul>
 <li>When executing arithmetic or logical operations on nullable columns, we always have to consider what will happen to a row which has a NULL value.</li>
 </ul>
-<h3 id="Null-Functions">Null Functions<a class="anchor-link" href="#Null-Functions">&#182;</a></h3><ul>
-<li>The most used functions are:</li>
+<h3 id="Null-Functions">Null Functions<a class="anchor-link" href="#Null-Functions">&#182;</a></h3><h4 id="NVL">NVL<a class="anchor-link" href="#NVL">&#182;</a></h4><p><strong>Syntax</strong></p>
+<p><code>NVL(expr1, expr2)</code></p>
+<p><strong>Purpose</strong></p>
+<p><code>NVL</code> lets you replace null (returned as a blank) with a string in the results of a query. If <code>expr1</code> is null, then <code>NVL</code> returns <code>expr2</code>. If <code>expr1</code> is not null, then <code>NVL</code> returns <code>expr1</code>.</p>
+<ul>
+<li>The most commonly used null functions are:</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="n">COALESCE</span><span class="p">(</span><span class="n">expr1</span><span class="p">,</span> <span class="n">expr2</span><span class="p">,</span> <span class="p">...)</span>  
 
@@ -13261,7 +13265,7 @@ div#notebook {
 <span class="c1">-- will return a</span>
 </pre></div>
 <ul>
-<li>COALESCE expects consistent datatypes, and will throw a 'incosistent datatype error' if not:</li>
+<li>COALESCE expects consistent datatypes, and will throw a 'incosistent datatype error' otherwise:</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">COALESCE</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">sysdate</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">dual</span><span class="p">;</span> 
 
@@ -13272,7 +13276,7 @@ div#notebook {
 </ul>
 <p><code>ROWNUM, ROWID, CURRVAL, NEXTVAL, LEVEL</code></p>
 <ul>
-<li>E.g</li>
+<li>Example:</li>
 </ul>
 <div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">ROWID</span><span class="p">,</span> <span class="n">last_name</span> <span class="k">FROM</span> <span class="n">ot</span><span class="p">.</span><span class="n">orders</span><span class="p">;</span>
 </pre></div>
