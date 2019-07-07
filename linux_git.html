@@ -11936,6 +11936,10 @@ options:
 
 -b  :bakup - this will create a backup file w/ tilda character(~) appended to it
 
+---- Aside ---------
+
+pdftotext pdf_file   converts a pdf file to a text file
+
 
 
 ---- vi text editor ---------
@@ -11972,6 +11976,12 @@ CTRL + g = current line numbrer
 CTRL + b = scroll back to previous window of text  
 
 CTRL + f = scroll forward to next window of text 
+
+--
+
+:set number     (to see line numbers)
+
+:set nonumber    (to disable line numbers) 
 
 :n = go to line number n
 
@@ -12021,13 +12031,6 @@ cG = change through the last line of the file
 c$ = change to the end of the line
 
 c^ = change to the beginning of the line
-
-
-
-
-:set numbrer     (to see line numbers)
-
-:set nonumber    (to disable line numbers) 
 
 
 
@@ -12508,6 +12511,7 @@ git stash list
 
 git stash pop
 -----</code></pre>
+<hr>
 <h1 id="06/26/2019">06/26/2019<a class="anchor-link" href="#06/26/2019">&#182;</a></h1>
 <pre><code>
 date 
@@ -12539,13 +12543,20 @@ echo "World"  &gt;&gt; hello.txt                 (appends to the file)
 
 ----
 
-grep -E "date | time"
+egrep "foo | bar" *.txt
+
+grep "foo \| bar"*.txt
+
+grep -E "foo | bar"*.txt
+
+
 
 
 find / -mtime +10 | head -n 10 | grep -E "*date* | *time*"       (E flag =&gt; extended regexp)
 
 
 find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-%d-%Y")       (E flag =&gt; extended regexp)</code></pre>
+<hr>
 
 </div>
 </div>
@@ -12577,9 +12588,10 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
 <p><strong>ACID</strong> (<span style='background-color:lightyellow'>Atomicity, Consistency, Isolation, Durability</span>) is a set of properties of database transactions intended to guarantee validity even in the event of errors, power failures, etc. In the context of databases, a sequence of database operations that satisfies the ACID properties (and these can be perceived as a single logical operation on the data) is called a transaction. For example, a transfer of funds from one bank account to another, even involving multiple changes such as debiting one account and crediting another, is a single transaction.</p>
 <p>In 1983, Andreas Reuter and Theo Härder coined the acronym ACID as shorthand for Atomicity, Consistency, Isolation, and Durability, building on earlier work by Jim Gray who enumerated Atomicity, Consistency, and Durability but left out Isolation when characterizing the transaction concept. These four properties describe the major guarantees of the transaction paradigm, which has influenced many aspects of development in database systems.</p>
 <p><a href="https://en.wikipedia.org/wiki/ACID">More on ACID</a></p>
-<p><code>ETL</code>   =&gt; Extract Transform Load</p>
+<p><span style='background-color:lightgreen'>`ETL`   => Extract Transform Load</span></p>
 <p><strong>Data warehousing</strong></p>
-<p>Data warehousing is the process of constructing and using a data warehouse. A data warehouse is constructed by integrating data from multiple heterogeneous sources that support analytical reporting, structured and/or ad hoc queries, and decision making. Data warehousing involves data cleaning, data integration, and data consolidations.</p>
+<p><span style='color:green'>Data warehousing is the process of constructing and using a data warehouse.</span> <span style='color:dodgerblue'>A data warehouse is constructed by integrating data from multiple heterogeneous sources that support analytical reporting, structured and/or ad hoc queries, and decision making.</span> <span style='color:green'>Data warehousing involves data cleaning, data integration, and data consolidations.</span></p>
+<hr>
 <p><strong><code>sudo yum install mysql -y</code></strong>    (to install mysql on a linux ec2 instance)</p>
 <p>After creating a MariaDB RDS,</p>
 <p><strong><code>mysql -h&lt;RDS-endpoint&gt; -u&lt;RDS-username&gt; -p&lt;RDS-password&gt;</code></strong>              (to longIn to the RDS instance from an ec2 cli)</p>
@@ -12601,7 +12613,7 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
 <li><span style='color:purple'>Then, generate a cURL code and copy it</span>  </li>
 </ul>
 <ul>
-<li><span style='color:purple'>Finally, on a CLI in an ec2 instance, enter **`<cURL-code> -o newFileName`**</span> </li>
+<li><span style='color:purple'>Finally, on a CLI in an ec2 instance, enter **`cURL-code -o newFileName`**</span> </li>
 </ul>
 
 </div>
@@ -12611,6 +12623,7 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<hr>
 <h1 id="07/01/2019">07/01/2019<a class="anchor-link" href="#07/01/2019">&#182;</a></h1><h3 id="Snowflake">Snowflake<a class="anchor-link" href="#Snowflake">&#182;</a></h3><p><strong>Create Snowflake objects</strong></p>
 <p><code>create or replace database sf_tuts;</code></p>
 <p><strong>Check the schema</strong></p>
@@ -12640,9 +12653,9 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
   <span class="n">compression</span> <span class="o">=</span> <span class="n">gzip</span><span class="p">;</span>
 </pre></div>
 <p><strong>Stage data files</strong></p>
-<ol>
+<ul>
 <li>Using data from s3</li>
-</ol>
+</ul>
 <div class="highlight"><pre><span></span><span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="n">stage</span> <span class="n">my_s3_stage</span> 
     <span class="n">url</span><span class="o">=</span><span class="s1">&#39;s3://&lt;bucket&gt;&#39;</span>
     <span class="n">credentials</span><span class="o">=</span><span class="p">(</span><span class="n">aws_key_id</span><span class="o">=</span><span class="s1">&#39;&lt;your key&gt;&#39;</span> <span class="n">aws_secret_key</span><span class="o">=</span><span class="s1">&#39;&lt;your secred&gt;&#39;</span><span class="p">)</span>
@@ -12651,22 +12664,21 @@ find / -mtime +10 | head -n 10 | grep -E "^date" 2&amp;1 &gt; Hailu_$(date "+%m-
 
 
 <span class="k">copy</span> <span class="k">into</span> <span class="n">EMP_BASIC</span>
-  <span class="k">from</span> <span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">becloudready</span><span class="o">/</span><span class="k">data</span><span class="o">-</span><span class="n">analytics</span> <span class="n">credentials</span><span class="o">=</span><span class="p">(</span><span class="n">aws_key_id</span><span class="o">=</span><span class="s1">&#39;&lt;your key&gt;&#39;</span> <span class="n">aws_secret_key</span><span class="o">=</span><span class="s1">&#39;&lt;your secred&gt;&#39;</span><span class="p">)</span>
-  <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
-  <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;.*employees0[1-5].csv&#39;</span>
-  <span class="n">on_error</span> <span class="o">=</span> <span class="s1">&#39;skip_file&#39;</span><span class="p">;</span>
-
-
-
-<span class="k">copy</span> <span class="k">into</span> <span class="n">EMP_BASIC</span>
   <span class="k">from</span> <span class="o">@</span><span class="n">my_s3_stage</span>
   <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
   <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;.*employees0[1-5].csv&#39;</span>
   <span class="n">on_error</span> <span class="o">=</span> <span class="s1">&#39;skip_file&#39;</span><span class="p">;</span>
+
+
+<span class="k">copy</span> <span class="k">into</span> <span class="n">EMP_BASIC</span>
+  <span class="k">from</span> <span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">becloudready</span><span class="o">/</span><span class="k">data</span><span class="o">-</span><span class="n">analytics</span> <span class="n">credentials</span><span class="o">=</span><span class="p">(</span><span class="n">aws_key_id</span><span class="o">=</span><span class="s1">&#39;&lt;your key&gt;&#39;</span> <span class="n">aws_secret_key</span><span class="o">=</span><span class="s1">&#39;&lt;your secred&gt;&#39;</span><span class="p">)</span>
+  <span class="n">file_format</span> <span class="o">=</span> <span class="p">(</span><span class="k">type</span> <span class="o">=</span> <span class="n">csv</span> <span class="n">field_optionally_enclosed_by</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+  <span class="n">pattern</span> <span class="o">=</span> <span class="s1">&#39;.*employees0[1-5].csv&#39;</span>
+  <span class="n">on_error</span> <span class="o">=</span> <span class="s1">&#39;skip_file&#39;</span><span class="p">;</span>
 </pre></div>
-<ol>
+<ul>
 <li>Using data on local machine</li>
-</ol>
+</ul>
 <div class="highlight"><pre><span></span><span class="n">put</span> <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">Users</span><span class="o">/</span><span class="n">hailuteju</span><span class="o">/</span><span class="n">Documents</span><span class="o">/</span><span class="n">awsTraining</span><span class="o">/</span><span class="n">notes</span><span class="o">/</span><span class="n">snowflake</span><span class="o">-</span><span class="n">tutorials</span><span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">employees0</span><span class="o">*</span><span class="p">.</span><span class="n">csv</span> <span class="o">@</span><span class="n">sf_tuts</span><span class="p">.</span><span class="k">public</span><span class="o">%</span><span class="n">emp_basic</span><span class="p">;</span>
 </pre></div>
 <p><strong>List staged files</strong></p>
@@ -12871,6 +12883,7 @@ memory usage: 4.7+ MB
 
 <span class="c1">-- snowsql -c example -f snowflake_assignment.sql -o output_format=csv -o header=false -o timing=false -o friendly=false  &gt; sf_assignment_output_file.csv</span>
 </pre></div>
+<p>Learn more about onload and user defined functions (UDFs) <a href="https://github.com/hailuteju/snowflake-tutorials">https://github.com/hailuteju/snowflake-tutorials</a></p>
 
 </div>
 </div>
@@ -12898,7 +12911,7 @@ memory usage: 4.7+ MB
 <span class="n">BUCKET_NAME</span> <span class="o">=</span> <span class="s2">&quot;mybucketname&quot;</span>
 
 
-<span class="n">sparkDB</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;s3a://{}:{}@{}/mys3FilePath/testFile.csv&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ACCESS_KEY</span><span class="p">,</span> <span class="n">ENCODED_SECRETE_KEY</span><span class="p">,</span><span class="n">BUCKET_NAME</span><span class="p">))</span>
+<span class="n">sparkDB</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="n">inferSchema</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;s3://{}:{}@{}/mys3FilePath/testFile.csv&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ACCESS_KEY</span><span class="p">,</span> <span class="n">ENCODED_SECRETE_KEY</span><span class="p">,</span><span class="n">BUCKET_NAME</span><span class="p">))</span>
 
 <span class="n">sparkDB</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
