@@ -3,16 +3,16 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>linux_git</title><script type="text/javascript" src="http://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Y-qAu9hDBkylZwJWSm60OZHy7qnwkwwqNQiYrpTv3vfS4V5ZNdSqX9kdZh827Gd6ZAIIsh6V69LVFJt-PiJfzWV731vIRT5OE4OfsCIB287JnKwDNYepRXB1qPZEToe4KjcWRY-625bDnRwqRw_dOYcSTdOPd_qna_2aLDXamZY" charset="UTF-8"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>linux_git</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
 
 <style type="text/css">
-    pre { line-height: 125%; margin: 0; }
-td.linenos pre { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
-span.linenos { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
-td.linenos pre.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+    pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
 .highlight .hll { background-color: var(--jp-cell-editor-active-background) }
 .highlight { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }
@@ -14478,6 +14478,9 @@ x (execute): 1
 <p><code>find . -name "rc.conf" -exec chmod o+r '{}' \;</code></p>
 <p>The commands run with -exec are executed in the root directory of the find process. Use -execdir to execute the specified command in the directory where the match resides. This may allieviate security concerns and produce more desirable performance for some operations.</p>
 <p><code>find ~/ -type f -mtime -1 -execdir grep "sql$" '{}' \; -print</code></p>
+<p><code>sudo find / -maxdepth 4 -type f -size +100k -size -5M -exec cp {} ~/Desktop/copy_here \;</code></p>
+<p><code>sudo find / -type f -size -100k -o -size +5M -exec cp {} ~/Desktop/copy_here \;</code></p>
+<p><code>sudo find / -type f -size -100k -o -size +5M -ok cp {} ~/Desktop/copy_here \;</code> --does exactly as above but recursively asks if it's ok to copy</p>
 <p><strong>SED (stream editor)</strong></p>
 <p>By using sed you can edit a file even without opening it, which is much quicker way to find and replace something in file, than first opening that file in VI editor and then changing it. By default, the sed command replaces the first occurrence of the pattern in each line and it won't replace the second, third ... occurrence in the line unless used with the flag /g (for global replacement). Can also do /3g (from the third occurrence of a pattern in a line)</p>
 <p><code>sed 's/eror/error/g' sample.txt</code>      (g for globally); also works with vi editor</p>
@@ -14600,7 +14603,11 @@ x (execute): 1
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="GIT--">GIT  <a class="anchor" id="git" /><a class="anchor-link" href="#GIT--">&#182;</a></h1><p><a href="https://education.github.com/git-cheat-sheet-education.pdf">Git Cheatsheet</a></p>
+<h1 id="GIT--">GIT  <a class="anchor" id="git" /><a class="anchor-link" href="#GIT--">&#182;</a></h1><blockquote><p><a href="https://education.github.com/git-cheat-sheet-education.pdf">Git Cheatsheet</a><br>
+<a href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a><br>
+<a href="https://algorithmia.com/blog/how-to-version-control-your-production-machine-learning-models">How to version control your production machine learning models</a><br>
+<a href="https://towardsdatascience.com/version-control-ml-model-4adb2db5f87c">Version Control ML Model</a></p>
+</blockquote>
 <p><code>git clone  &lt;repo-URL&gt;</code></p>
 <p><code>git config user.name "Hailu Teju"</code></p>
 <p><code>git config user.email "hailutejut@gmail.com"</code></p>
@@ -14613,27 +14620,31 @@ x (execute): 1
                             (Pull a repo that was modified in the browser. Then resolve the differences between the local copy and remote copy using a text editor. Then push)</p>
 <p><code>git checkout</code>            (before added  - removes modified files)</p>
 <p><code>git reset</code>                (after add and before commit  - removes added (but not committed) files)</p>
+<p><code>git merge [branch]</code>          (merge the specified branch's history into the current one)</p>
 <p><code>git merge &lt;derived-branch&gt;</code>             (from master branch)</p>
 <p><code>git merge master</code>                    (from derived-branch)</p>
 <p><strong>Creating a branch</strong></p>
 <p><code>git checkout -b &lt;branch-name&gt;</code>     (the -b flag is to create a new branch)</p>
 <p><code>git branch</code>         (to see what branch you are on)</p>
+<p><code>git branch [branch-name]</code>    (create a new branch at the current commit)</p>
 <p><code>git push origin &lt;branch-name&gt;</code></p>
 <p><code>git checkout &lt;branch-name&gt;</code></p>
 <p><code>git checkout master</code>         (to go back to the master branch)</p>
 <p><code>git checkout &lt;hash#&gt;</code></p>
 <p><code>git branch -m &lt;old-branch-name&gt; &lt;new-branch-name&gt;</code>        (modify old-branch-name)</p>
+<p><code>git branch -d &lt;branch-name&gt;</code>     (from the main branch to delete branch-name)</p>
 <p><code>git rm &lt;file-name&gt;</code>                  (removes a file from a git repo)</p>
 <p><code>git checkout -- &lt;file-name&gt;</code>         (to discard changes in the working directory)</p>
 <hr>
 <p><code>git diff</code>      (changes made)</p>
-<p><code>git log</code></p>
+<p><code>git log</code>      (show all commits in the current branch's history)</p>
 <p><code>git blame &lt;file-name&gt;</code>      (see what changes have been made and by whom)</p>
 <p><code>git diff hash#1 hash#2</code></p>
 <p><code>git diff hash-last</code>         (difference the last commit made)</p>
-<p><code>git stash</code></p>
-<p><code>git stash list</code></p>
-<p><code>git stash pop</code></p>
+<p><code>git stash</code>      (save modified and saved changes)</p>
+<p><code>git stash list</code>    (list stack-order of stashed file changes)</p>
+<p><code>git stash pop</code>     (write working from top of stash stack)</p>
+<p><code>git stash drop</code>    (discard the changes from top of stash stack)</p>
 
 </div>
 </div>
